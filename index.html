@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MoonPhase Tarot — Free Daily Tarot, Horoscopes & Birth Charts</title>
+<meta name="description" content="Free daily tarot readings, today's moon phase, daily horoscopes, birth chart (Big Three) calculator, zodiac compatibility and numerology. No sign-up, ever.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0918; --bg2:#130e28; --panel:#1a1338; --panel2:#211a47;
+  --gold:#d9b45b; --gold-soft:#eed9a0; --gold-dim:#9a7f3f;
+  --ink:#f0e9da; --muted:#b3a8cf; --faint:#7e74a3;
+  --lav:#a78bda; --rose:#d9a0b8;
+  --line:rgba(217,180,91,.28); --line-soft:rgba(217,180,91,.14);
+  --radius:14px;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Jost',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+   radial-gradient(900px 500px at 85% -5%,rgba(167,139,218,.16),transparent 60%),
+   radial-gradient(700px 420px at -10% 30%,rgba(217,180,91,.07),transparent 60%),
+   radial-gradient(800px 600px at 50% 115%,rgba(90,60,160,.14),transparent 60%);}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.55}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+h1,h2,h3,.serif{font-family:var(--serif)}
+a{color:var(--gold-soft)}
+img{max-width:100%}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(12,9,24,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft)}
+.hbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0}
+.logo{font-family:var(--serif);font-size:1.65rem;font-weight:600;letter-spacing:.04em;color:var(--ink);text-decoration:none;white-space:nowrap}
+.logo .moon-glyph{color:var(--gold);font-size:1.3rem;vertical-align:-2px}
+.logo em{font-style:italic;color:var(--gold-soft)}
+nav.main{display:flex;gap:4px;flex-wrap:wrap}
+nav.main a{color:var(--muted);text-decoration:none;font-size:.86rem;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border-radius:8px}
+nav.main a:hover{color:var(--gold-soft);background:rgba(217,180,91,.08)}
+@media(max-width:860px){nav.main{display:none}}
+/* hero */
+.hero{padding:64px 0 30px;text-align:center}
+.eyebrow{letter-spacing:.34em;text-transform:uppercase;font-size:.72rem;color:var(--gold);margin-bottom:14px}
+.hero h1{font-size:clamp(2.5rem,6vw,4.3rem);font-weight:600;line-height:1.08}
+.hero h1 em{font-style:italic;color:var(--gold-soft)}
+.hero p.lede{max-width:640px;margin:18px auto 0;color:var(--muted);font-size:1.08rem}
+.hero-cta{margin-top:28px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-block;padding:12px 26px;border-radius:999px;border:1px solid var(--gold);color:#17102a;background:linear-gradient(180deg,var(--gold-soft),var(--gold));font-family:var(--sans);font-weight:500;letter-spacing:.06em;text-decoration:none;cursor:pointer;font-size:.95rem;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(217,180,91,.25)}
+.btn.ghost{background:transparent;color:var(--gold-soft)}
+.btn.ghost:hover{background:rgba(217,180,91,.1)}
+.btn.small{padding:8px 18px;font-size:.86rem}
+/* moon strip */
+.moonstrip{margin:38px auto 0;max-width:860px;background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:22px 26px;display:flex;gap:26px;align-items:center;text-align:left}
+.moonstrip .moonviz{flex:0 0 auto}
+.moonstrip h3{font-size:1.5rem;font-weight:600}
+.moonstrip .sub{color:var(--muted);font-size:.95rem}
+.moonfacts{display:flex;gap:22px;flex-wrap:wrap;margin-top:8px}
+.moonfacts div{min-width:104px}
+.moonfacts .k{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+.moonfacts .v{font-family:var(--serif);font-size:1.15rem;color:var(--gold-soft)}
+@media(max-width:640px){.moonstrip{flex-direction:column;text-align:center}.moonfacts{justify-content:center}}
+/* sections */
+section{padding:56px 0 8px}
+.sec-head{text-align:center;max-width:680px;margin:0 auto 30px}
+.sec-head h2{font-size:clamp(1.9rem,4vw,2.7rem);font-weight:600}
+.sec-head h2 em{font-style:italic;color:var(--gold-soft)}
+.sec-head p{color:var(--muted);margin-top:8px}
+.rule{width:74px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0;position:relative}
+.rule::after{content:"☾";position:absolute;left:50%;top:-11px;transform:translateX(-50%);color:var(--gold);background:var(--bg);padding:0 8px;font-size:.85rem}
+/* cards & grids */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.panel{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:var(--radius);padding:24px}
+.panel:hover{border-color:var(--line)}
+.panel h3{font-size:1.35rem;font-weight:600;margin-bottom:6px}
+.panel p{color:var(--muted);font-size:.96rem}
+.panel .go{margin-top:12px;display:inline-block;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-decoration:none}
+/* tarot cards */
+.drawzone{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:8px 0 6px;min-height:308px}
+.tcard{width:172px;height:288px;border-radius:12px;position:relative;perspective:900px}
+.tcard .inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.7,.3,1)}
+.tcard.flipped .inner{transform:rotateY(180deg)}
+.tcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;border:1px solid var(--gold-dim);overflow:hidden}
+.tcard .back{background:
+  radial-gradient(circle at 50% 38%,rgba(238,217,160,.28),transparent 42%),
+  repeating-radial-gradient(circle at 50% 38%,transparent 0 16px,rgba(217,180,91,.13) 16px 17px),
+  linear-gradient(160deg,#241a4e,#120c2a);
+  display:flex;align-items:center;justify-content:center}
+.tcard .back .bigmoon{font-size:3rem;color:var(--gold);text-shadow:0 0 22px rgba(217,180,91,.6)}
+.tcard .front{background:linear-gradient(165deg,#fdf8ec,#efe3c2);color:#241a3e;transform:rotateY(180deg);padding:14px 12px;display:flex;flex-direction:column;text-align:center}
+.tcard .front.reversed .art{transform:rotate(180deg)}
+.tcard .num{font-size:.7rem;letter-spacing:.3em;color:#8a6d2f;text-transform:uppercase}
+.tcard .art{font-size:2.5rem;line-height:1.15;color:#4a3577;margin:6px 0 2px}
+.tcard .cname{font-family:var(--serif);font-weight:700;font-size:1.18rem;line-height:1.15}
+.tcard .ckey{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#7a6435;margin-top:4px}
+.tcard .cmean{font-size:.78rem;line-height:1.45;color:#463a63;margin-top:8px;overflow:hidden}
+.tcard .revtag{position:absolute;bottom:8px;left:0;right:0;font-size:.62rem;letter-spacing:.24em;color:#a03d5c;text-transform:uppercase}
+.pos-label{text-align:center;font-size:.72rem;letter-spacing:.26em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.reading-note{max-width:720px;margin:16px auto 0;text-align:center;color:var(--muted)}
+.reading-note b{color:var(--gold-soft);font-weight:500}
+/* forms */
+.toolbox{max-width:760px;margin:0 auto;background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:var(--radius);padding:28px}
+.toolbox h3{font-size:1.5rem;margin-bottom:4px}
+.toolbox .hint{color:var(--muted);font-size:.92rem;margin-bottom:16px}
+.frow{display:flex;gap:14px;flex-wrap:wrap}
+.fld{flex:1 1 150px;display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.fld input,.fld select{background:#0f0b22;border:1px solid var(--line-soft);border-radius:9px;color:var(--ink);padding:11px 12px;font-family:var(--sans);font-size:.97rem;width:100%}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--gold)}
+.toolresult{margin-top:20px;border-top:1px solid var(--line-soft);padding-top:18px;display:none}
+.toolresult.show{display:block}
+.big3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:640px){.big3{grid-template-columns:1fr}}
+.big3 .cell{background:rgba(217,180,91,.05);border:1px solid var(--line-soft);border-radius:11px;padding:16px;text-align:center}
+.big3 .cell .k{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
+.big3 .cell .sign{font-family:var(--serif);font-size:1.7rem;font-weight:600;color:var(--gold-soft)}
+.big3 .cell .glyph{font-size:1.5rem;color:var(--gold)}
+.big3 .cell p{font-size:.86rem;color:var(--muted);margin-top:6px;text-align:left}
+/* sign picker */
+.signs{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+@media(max-width:900px){.signs{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.signs{grid-template-columns:repeat(3,1fr)}}
+.signbtn{background:var(--panel);border:1px solid var(--line-soft);border-radius:11px;padding:13px 6px;text-align:center;cursor:pointer;color:var(--ink);font-family:var(--sans)}
+.signbtn:hover{border-color:var(--gold)}
+.signbtn.sel{border-color:var(--gold);background:rgba(217,180,91,.1)}
+.signbtn .g{display:block;font-size:1.35rem;color:var(--gold)}
+.signbtn .n{font-size:.82rem;letter-spacing:.04em}
+.signbtn .d{display:block;font-size:.64rem;color:var(--faint)}
+/* library */
+.libgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:900px){.libgrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:640px){.libgrid{grid-template-columns:repeat(2,1fr)}}
+.libcard{background:var(--panel);border:1px solid var(--line-soft);border-radius:11px;padding:15px;cursor:pointer;text-align:left;color:var(--ink);font-family:var(--sans);width:100%}
+.libcard:hover{border-color:var(--gold)}
+.libcard .g{font-size:1.4rem;color:var(--gold)}
+.libcard .n{font-family:var(--serif);font-weight:600;font-size:1.08rem;display:block;margin-top:4px}
+.libcard .k{font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.searchrow{max-width:520px;margin:0 auto 22px}
+.searchrow input{width:100%;background:#0f0b22;border:1px solid var(--line-soft);border-radius:999px;color:var(--ink);padding:12px 20px;font-family:var(--sans);font-size:.97rem}
+.searchrow input:focus{outline:none;border-color:var(--gold)}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(6,4,14,.78);display:none;align-items:center;justify-content:center;z-index:100;padding:18px}
+.modal.open{display:flex}
+.modal .box{background:linear-gradient(180deg,var(--panel2),var(--bg2));border:1px solid var(--gold-dim);border-radius:16px;max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:30px}
+.modal .box h3{font-size:1.9rem;font-weight:600}
+.modal .box .glyph{font-size:2.2rem;color:var(--gold)}
+.modal .x{float:right;background:none;border:1px solid var(--line);color:var(--gold-soft);border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:1rem}
+.modal h4{font-family:var(--serif);font-size:1.15rem;color:var(--gold-soft);margin:16px 0 4px}
+.modal p{color:var(--muted);font-size:.95rem}
+/* calendar */
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.calcell{background:var(--panel);border:1px solid var(--line-soft);border-radius:10px;padding:8px 6px;text-align:center;min-height:74px}
+.calcell.today{border-color:var(--gold);background:rgba(217,180,91,.08)}
+.calcell .d{font-size:.72rem;color:var(--faint);letter-spacing:.1em}
+.calcell .pn{font-size:.6rem;color:var(--muted);line-height:1.25;display:block;margin-top:2px}
+.calhead{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px}
+.calhead div{text-align:center;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+/* score */
+.scorewrap{text-align:center;margin:6px 0 4px}
+.score{font-family:var(--serif);font-size:3.4rem;font-weight:700;color:var(--gold-soft);line-height:1}
+.scorebar{height:8px;border-radius:99px;background:#0f0b22;border:1px solid var(--line-soft);overflow:hidden;max-width:420px;margin:12px auto}
+.scorebar i{display:block;height:100%;background:linear-gradient(90deg,var(--lav),var(--gold))}
+/* shop / support */
+.price{font-family:var(--serif);font-size:1.3rem;color:var(--gold-soft)}
+.tag{display:inline-block;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:99px;padding:3px 10px;margin-bottom:10px}
+.support{background:linear-gradient(140deg,#241a4e,#150f30);border:1px solid var(--gold-dim);border-radius:var(--radius);padding:36px;text-align:center;max-width:820px;margin:0 auto}
+.support h3{font-size:2rem;font-weight:600}
+.support p{color:var(--muted);max-width:520px;margin:10px auto 20px}
+/* footer */
+footer{margin-top:70px;border-top:1px solid var(--line-soft);padding:34px 0 44px;color:var(--faint);font-size:.86rem}
+footer .cols{display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--gold-soft)}
+footer .disc{margin-top:20px;max-width:760px;line-height:1.55}
+.center{text-align:center}
+.mt{margin-top:18px}
+.tcard .front{background:#0f0b22;padding:0}
+.tcard .cardart{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tcard .cardart.rev{transform:rotate(180deg)}
+.tcard .cband{position:absolute;left:0;right:0;bottom:0;padding:20px 10px 9px;background:linear-gradient(180deg,transparent,rgba(9,6,22,.9) 48%);text-align:center;z-index:2}
+.tcard .cband .num{color:var(--gold);font-size:.64rem}
+.tcard .cband .cname{color:#fdf6e0;font-size:1.22rem}
+.tcard .cband .ckey{color:#cfc3e8}
+.tcard .revtag{z-index:3;background:rgba(9,6,22,.75);padding:2px 0}
+.libimg{width:100%;height:132px;object-fit:cover;border-radius:7px;margin-bottom:9px;display:block}
+.signart{width:100%;height:58px;object-fit:cover;border-radius:7px;display:block;margin-bottom:6px}
+.zodimg{width:100%;height:170px;object-fit:cover;border-radius:9px;margin-bottom:12px;display:block}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<canvas class="stars" id="stars"></canvas>
+
+<header>
+  <div class="wrap hbar">
+    <a class="logo" href="#top"><span class="moon-glyph">☾</span> Moon<em>Phase</em> Tarot</a>
+    <nav class="main">
+      <a href="#daily">Daily</a>
+      <a href="#draw">Tarot Draw</a>
+      <a href="#birthchart">Birth Chart</a>
+      <a href="#compat">Compatibility</a>
+      <a href="#zodiac">Zodiac</a>
+      <a href="#mooncal">Moon Calendar</a>
+      <a href="#numerology">Numerology</a>
+      <a href="#library">Card Library</a>
+      <a href="#shop">Shop</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap" id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">Free daily tarot · astrology · moon wisdom</div>
+    <h1>Guidance written in<br><em>moonlight &amp; cards</em></h1>
+    <p class="lede">Draw your daily tarot, read your horoscope, discover your Big Three and follow the moon — free, every day, no sign-up and no catch.</p>
+    <div class="hero-cta">
+      <a class="btn" href="#draw">Draw My Cards</a>
+      <a class="btn ghost" href="#birthchart">Find My Big Three</a>
+    </div>
+    <div class="moonstrip">
+      <div class="moonviz" id="heroMoon"></div>
+      <div>
+        <h3 id="heroPhaseName">Tonight's Moon</h3>
+        <div class="sub" id="heroPhaseSub">Calculating the moon…</div>
+        <div class="moonfacts">
+          <div><div class="k">Illumination</div><div class="v" id="mfIllum">—</div></div>
+          <div><div class="k">Moon Age</div><div class="v" id="mfAge">—</div></div>
+          <div><div class="k">Next Full Moon</div><div class="v" id="mfFull">—</div></div>
+          <div><div class="k">Next New Moon</div><div class="v" id="mfNew">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAILY -->
+  <section id="daily">
+    <div class="sec-head">
+      <h2>Today's <em>Energy</em></h2>
+      <p>Your card of the day and daily horoscope — refreshed every morning, always free.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel center">
+        <span class="tag">Card of the Day</span>
+        <div class="drawzone" id="dailyCardZone" style="min-height:288px"></div>
+        <p class="reading-note" id="dailyCardNote"></p>
+      </div>
+      <div class="panel">
+        <span class="tag">Daily Horoscope</span>
+        <h3 style="margin-bottom:12px">Pick your sign</h3>
+        <div class="signs" id="signPicker"></div>
+        <div class="toolresult" id="horoResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRAW -->
+  <section id="draw">
+    <div class="sec-head">
+      <h2>Free Tarot <em>Draw</em></h2>
+      <p>Focus on a question, then draw. One card for a quick answer, or three for past · present · future.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="center" style="margin-bottom:20px">
+      <button class="btn" id="draw1">Draw 1 Card</button>
+      <button class="btn ghost" id="draw3">Draw 3 Cards</button>
+    </div>
+    <div class="drawzone" id="drawZone">
+      <div class="tcard"><div class="inner"><div class="face back"><span class="bigmoon">☾</span></div></div></div>
+    </div>
+    <p class="reading-note" id="drawNote">Your reading will appear here. Reversed cards are on — about a third of draws include one.</p>
+  </section>
+
+  <!-- BIRTH CHART -->
+  <section id="birthchart">
+    <div class="sec-head">
+      <h2>Your <em>Big Three</em></h2>
+      <p>Sun, Moon and Rising — the core of your birth chart. Your details never leave your device: the calculation runs entirely in your browser.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="toolbox">
+      <h3>Birth Chart Calculator</h3>
+      <p class="hint">Enter your birth date, time and place coordinates (you can look them up on any map — New York is filled in as an example).</p>
+      <div class="frow">
+        <div class="fld"><label>Birth date</label><input type="date" id="bcDate" value="1995-06-15"></div>
+        <div class="fld"><label>Birth time</label><input type="time" id="bcTime" value="14:30"></div>
+      </div>
+      <div class="frow mt">
+        <div class="fld"><label>Latitude</label><input type="number" id="bcLat" step="0.1" value="40.7"></div>
+        <div class="fld"><label>Longitude</label><input type="number" id="bcLon" step="0.1" value="-74.0"></div>
+        <div class="fld"><label>UTC offset (hours)</label><input type="number" id="bcTz" step="0.5" value="-4"></div>
+      </div>
+      <div class="mt"><button class="btn" id="bcGo">Reveal My Big Three</button></div>
+      <div class="toolresult" id="bcResult"></div>
+    </div>
+  </section>
+
+  <!-- COMPATIBILITY -->
+  <section id="compat">
+    <div class="sec-head">
+      <h2>Love <em>Compatibility</em></h2>
+      <p>All 144 zodiac pairings, scored and explained — the MoonPhase way.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="toolbox">
+      <h3>Match Two Signs</h3>
+      <p class="hint">Choose two signs to see how the pairing flows — strengths, friction and the honest verdict.</p>
+      <div class="frow">
+        <div class="fld"><label>First sign</label><select id="cpA"></select></div>
+        <div class="fld"><label>Second sign</label><select id="cpB"></select></div>
+      </div>
+      <div class="mt"><button class="btn" id="cpGo">Check Compatibility</button></div>
+      <div class="toolresult" id="cpResult"></div>
+    </div>
+  </section>
+
+  <!-- ZODIAC -->
+  <section id="zodiac">
+    <div class="sec-head">
+      <h2>The <em>Zodiac</em></h2>
+      <p>Twelve signs, twelve original artworks. Visit each sign's own page for its full story — strengths, shadows, love and work.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="grid g4" id="zodiacGrid"></div>
+  </section>
+
+  <!-- MOON CALENDAR -->
+  <section id="mooncal">
+    <div class="sec-head">
+      <h2>Moon Phase <em>Calendar</em></h2>
+      <p id="calTitle">This month's moon, day by day.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="toolbox" style="max-width:860px">
+      <div class="calhead"><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div></div>
+      <div class="calgrid" id="calGrid"></div>
+      <p class="hint mt" id="calKey" style="margin-bottom:0"></p>
+    </div>
+  </section>
+
+  <!-- NUMEROLOGY -->
+  <section id="numerology">
+    <div class="sec-head">
+      <h2>Life Path <em>Number</em></h2>
+      <p>Your birth date holds a number. Find yours and what it says about your road.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="toolbox">
+      <h3>Numerology Calculator</h3>
+      <p class="hint">We add up your full birth date and reduce it to a single Life Path number (keeping the master numbers 11 and 22).</p>
+      <div class="frow">
+        <div class="fld"><label>Birth date</label><input type="date" id="numDate" value="1995-06-15"></div>
+      </div>
+      <div class="mt"><button class="btn" id="numGo">Find My Number</button></div>
+      <div class="toolresult" id="numResult"></div>
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="library">
+    <div class="sec-head">
+      <h2>Tarot Card <em>Library</em></h2>
+      <p>All 78 cards — meanings upright and reversed, keywords and guidance. Tap any card to read it in full.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="searchrow"><input type="text" id="libSearch" placeholder="Search cards… try “tower”, “cups”, “beginnings”"></div>
+    <div class="libgrid" id="libGrid"></div>
+  </section>
+
+  <!-- SHOP -->
+  <section id="shop">
+    <div class="sec-head">
+      <h2>The <em>Shop</em></h2>
+      <p>Original MoonPhase-era designs from our studio — instant downloads on Ko-fi, printed goods on Redbubble.</p>
+      <div class="rule"></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel">
+        <span class="tag">Digital Downloads</span>
+        <h3>Ko-fi Shop</h3>
+        <p>Printable tarot journals, moon planners, wall art and design files — instant download, ready the moment you check out.</p>
+        <a class="go" href="https://ko-fi.com/oddjack/shop" target="_blank" rel="noopener">Browse the Ko-fi shop →</a>
+      </div>
+      <div class="panel">
+        <span class="tag">Printed Goods</span>
+        <h3>Redbubble Store</h3>
+        <p>Our designs on tees, hoodies, stickers, posters and more — printed and shipped to your door by Redbubble.</p>
+        <a class="go" href="https://www.redbubble.com/people/Odd-jack/shop" target="_blank" rel="noopener">Browse the Redbubble store →</a>
+      </div>
+    </div>
+    <p class="center mt" style="color:var(--faint);font-size:.9rem">New astrology &amp; tarot design drops land here first — follow the shops so you don't miss them.</p>
+  </section>
+
+  <!-- SUPPORT -->
+  <section id="support">
+    <div class="support">
+      <div style="font-size:1.8rem;color:var(--gold)">☾</div>
+      <h3>Keep the Moonlight On</h3>
+      <p>MoonPhase Tarot is free for everyone, forever — no paywalls on daily readings. If it brightens your day, a small donation via Ko-fi (PayPal) helps cover the work behind it.</p>
+      <a class="btn" href="https://ko-fi.com/oddjack" target="_blank" rel="noopener">Support on Ko-fi</a>
+      <p style="font-size:.8rem;margin-top:16px;color:var(--faint)">Donations are voluntary and non-refundable. Thank you for keeping independent astrology alive.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cols">
+      <div>
+        <div class="logo" style="font-size:1.25rem"><span class="moon-glyph">☾</span> Moon<em>Phase</em> Tarot</div>
+        <p style="margin-top:8px;max-width:300px">Free daily tarot, horoscopes, moon phases and birth charts — made with care, updated by the moon.</p>
+      </div>
+      <div>
+        <p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Explore</p>
+        <p><a href="#daily">Daily Reading</a></p>
+        <p><a href="#birthchart">Birth Chart</a></p>
+        <p><a href="#compat">Compatibility</a></p>
+        <p><a href="#library">Card Library</a></p>
+      </div>
+      <div>
+        <p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Our Shops</p>
+        <p><a href="https://ko-fi.com/oddjack/shop" target="_blank" rel="noopener">Ko-fi — digital downloads</a></p>
+        <p><a href="https://www.redbubble.com/people/Odd-jack/shop" target="_blank" rel="noopener">Redbubble — printed goods</a></p>
+        <p><a href="https://ko-fi.com/oddjack" target="_blank" rel="noopener">Support us on Ko-fi</a></p>
+      </div>
+    </div>
+    <p class="disc">For entertainment and self-reflection purposes only. Astrology and tarot readings are not a substitute for professional advice on medical, legal, financial or mental-health matters. Birth chart calculations on this page are instant estimates computed in your browser; no birth data is ever sent to or stored on a server.</p>
+    <p style="margin-top:14px">© 2026 MoonPhase Tarot · Part of the Odd-jack studio family</p>
+  </footer>
+</div>
+
+<!-- CARD MODAL -->
+<div class="modal" id="cardModal">
+  <div class="box">
+    <button class="x" id="modalX" aria-label="Close">✕</button>
+    <img id="mArt" alt="" style="width:100%;height:270px;object-fit:cover;border-radius:10px;margin-bottom:14px">
+    <div class="glyph" id="mGlyph"></div>
+    <h3 id="mName"></h3>
+    <p id="mKeys" style="color:var(--gold);letter-spacing:.08em;text-transform:uppercase;font-size:.78rem"></p>
+    <h4>Upright</h4><p id="mUp"></p>
+    <h4>Reversed</h4><p id="mRev"></p>
+    <h4>In Love</h4><p id="mLove"></p>
+    <h4>In Career</h4><p id="mCareer"></p>
+  </div>
+</div>
+
+<script>
+/* ============ DATA ============ */
+const SIGNS=[
+ {n:"Aries",g:"♈",d:"Mar 21 – Apr 19",el:"Fire",ruler:"Mars",tr:"bold, driven, direct",
+  sun:"You lead with courage and instinct. Aries Suns are self-starters who would rather act and adjust than wait for permission.",
+  moon:"Your feelings arrive fast and burn bright. You need movement, honesty and a little healthy competition to feel emotionally alive.",
+  ris:"You come across as energetic, frank and unafraid — people meet the warrior first, then discover the warmth underneath."},
+ {n:"Taurus",g:"♉",d:"Apr 20 – May 20",el:"Earth",ruler:"Venus",tr:"steady, sensual, loyal",
+  sun:"You build slowly and keep what you build. Taurus Suns value comfort, quality and results you can touch.",
+  moon:"Your heart settles through the senses — good food, familiar places, unhurried affection. Security is your love language.",
+  ris:"You appear calm, grounded and quietly luxurious. People trust your steadiness before they know anything else about you."},
+ {n:"Gemini",g:"♊",d:"May 21 – Jun 20",el:"Air",ruler:"Mercury",tr:"curious, quick, playful",
+  sun:"Your mind is your engine. Gemini Suns collect ideas, people and perspectives, and connect them in ways nobody else sees.",
+  moon:"You process feelings by talking them out. Variety, laughter and mental stimulation restore you more than rest does.",
+  ris:"You seem witty, youthful and endlessly interesting — the conversation always starts with you in the room."},
+ {n:"Cancer",g:"♋",d:"Jun 21 – Jul 22",el:"Water",ruler:"Moon",tr:"intuitive, protective, deep",
+  sun:"You are ruled by the Moon herself. Cancer Suns feel the emotional weather of every room and build safe harbors for the people they love.",
+  moon:"Your feelings run deep and tidal. Home, memory and chosen family are where your heart recharges.",
+  ris:"You come across as gentle and guarded in equal measure — a soft exterior around a fiercely protective core."},
+ {n:"Leo",g:"♌",d:"Jul 23 – Aug 22",el:"Fire",ruler:"Sun",tr:"radiant, proud, generous",
+  sun:"You were born to shine. Leo Suns create, perform and protect with a huge heart and an unapologetic need to be seen.",
+  moon:"Your emotions need an audience of loved ones — appreciation and play are emotional oxygen for you.",
+  ris:"You appear confident, warm and magnetic. People notice your presence before you say a word."},
+ {n:"Virgo",g:"♍",d:"Aug 23 – Sep 22",el:"Earth",ruler:"Mercury",tr:"precise, devoted, wise",
+  sun:"You turn chaos into order. Virgo Suns are the quiet masters — skilled, thoughtful and devoted to doing things properly.",
+  moon:"Your heart calms when life is organized and useful. Small acts of service are how you say 'I love you'.",
+  ris:"You seem composed, capable and discerning. People hand you their problems because you radiate 'I've got this'."},
+ {n:"Libra",g:"♎",d:"Sep 23 – Oct 22",el:"Air",ruler:"Venus",tr:"graceful, fair, romantic",
+  sun:"You are the diplomat and the aesthete. Libra Suns seek harmony, beauty and partnership in everything they touch.",
+  moon:"Your feelings settle when things are balanced and beautiful. Conflict unsettles you; closeness restores you.",
+  ris:"You appear charming, polished and easy to be with — a social grace that makes people instantly comfortable."},
+ {n:"Scorpio",g:"♏",d:"Oct 23 – Nov 21",el:"Water",ruler:"Pluto",tr:"intense, private, transformative",
+  sun:"You live at depth. Scorpio Suns crave truth beneath the surface and have a gift for rising, phoenix-like, from any ending.",
+  moon:"Your emotions are all-or-nothing. Trust is everything; once given, your loyalty is absolute.",
+  ris:"You come across as magnetic and mysterious. People sense power and privacy in you from the first glance."},
+ {n:"Sagittarius",g:"♐",d:"Nov 22 – Dec 21",el:"Fire",ruler:"Jupiter",tr:"honest, restless, philosophical",
+  sun:"You are the seeker. Sagittarius Suns chase horizons — travel, truth and big ideas feed your fire.",
+  moon:"Your heart needs freedom and meaning. New places, big questions and laughter are your emotional medicine.",
+  ris:"You seem open, adventurous and refreshingly blunt. People expect stories — and honesty — from you."},
+ {n:"Capricorn",g:"♑",d:"Dec 22 – Jan 19",el:"Earth",ruler:"Saturn",tr:"ambitious, patient, dry-witted",
+  sun:"You climb. Capricorn Suns play the long game with discipline and a plan, building legacies that last.",
+  moon:"Your feelings are private and purposeful. Achievement and respect from your inner circle steady your heart.",
+  ris:"You appear composed, competent and quietly authoritative — the adult in any room, whatever your age."},
+ {n:"Aquarius",g:"♒",d:"Jan 20 – Feb 18",el:"Air",ruler:"Uranus",tr:"original, humane, contrarian",
+  sun:"You are wired for the future. Aquarius Suns think in systems, question every rule and champion the collective.",
+  moon:"Your emotions run through your ideals. You need intellectual kinship and space to be exactly yourself.",
+  ris:"You seem intriguing, unconventional and friendly-but-independent — people can't quite categorize you, and that's the point."},
+ {n:"Pisces",g:"♓",d:"Feb 19 – Mar 20",el:"Water",ruler:"Neptune",tr:"dreamy, compassionate, artistic",
+  sun:"You swim between worlds. Pisces Suns are old souls — empathic, imaginative and moved by music, water and spirit.",
+  moon:"Your feelings are boundless and absorbent. Solitude, art and the sea restore what the world drains.",
+  ris:"You appear soft, dreamy and kind — an otherworldly calm that makes people confide in you."}
+];
+const MAJORS=[
+ ["The Fool","0","✧","beginnings, innocence, leap of faith","A new chapter opens and the universe is quietly cheering. Trust the pull toward the unknown — pack light, stay curious, and let spontaneity lead.","Hesitation, recklessness or a leap taken without looking. Slow down: the cliff edge is real, even if the view is beautiful.","Love arrives as adventure — a connection that feels like fresh air. Let it be playful before it gets serious.","A risk at work pays off if it's calculated. Pitch the wild idea; just check the numbers first."],
+ ["The Magician","I","☿","willpower, skill, creation","Everything you need is already on the table. Focus your talent, say it plainly, and act — this is a day to make things happen, not wait for them.","Scattered energy or a smooth talker nearby. Someone's magic is smoke and mirrors; check the facts before you commit.","Charm is high and intentions matter. Be direct about what you want — mixed signals waste your power.","Your skills are the strategy. A presentation, negotiation or launch goes your way if you prepare like you mean it."],
+ ["The High Priestess","II","☾","intuition, mystery, inner knowing","The answer isn't in the noise — it's in the quiet underneath. Your intuition is unusually accurate now. Listen first, speak later.","You're ignoring a gut feeling, or a secret is distorting the picture. What isn't being said matters most.","A deep, soulful connection is forming — possibly unspoken. Trust what's felt over what's promised.","Not everything at work is on the record. Read between the lines and keep your counsel until the picture clears."],
+ ["The Empress","III","♀","abundance, nurture, creativity","Growth, comfort and creative fertility surround you. Tend what you love — a project, a person, yourself — and it will flourish.","Neglecting your own needs or a creative block. Abundance returns when you refill your own cup first.","Warm, sensual and generous energy. Love grows through care and touch — let yourself receive as much as you give.","A creative project or collaboration bears fruit. Beauty and comfort are worth investing in right now."],
+ ["The Emperor","IV","♜","structure, authority, stability","Order brings freedom today. Set the boundary, make the plan, keep the standard — your steadiness steadies everyone.","Rigid control or a clash with authority. Rules matter, but so does knowing which ones were made to be bent.","Stability is sexy now. A dependable partner — or being one — builds something that lasts.","Structure wins: budgets, systems, deadlines. Leadership is noticed; step into it cleanly."],
+ ["The Hierophant","V","♝","tradition, guidance, shared values","Conventional wisdom earns its name today. A mentor, ritual or time-tested path offers exactly the grounding you need.","Question the rulebook. Tradition that no longer serves you is just a habit wearing a crown.","Shared values make or break this bond. A relationship may deepen toward real commitment.","The established route works — certification, procedure, the mentor's advice. Don't reinvent what already runs."],
+ ["The Lovers","VI","♡","union, choice, alignment","A meaningful choice of the heart is before you. When your values and your desires agree, the decision makes itself.","Misalignment — wanting one thing, choosing another. A relationship or decision needs an honest conversation.","A significant connection, possibly a soulmate-grade one. Chemistry plus shared values: the real thing has both.","A partnership or contract decision. Choose the option you'd still respect in five years."],
+ ["The Chariot","VII","♞","momentum, victory, direction","Grab the reins. Opposing forces pull at you, but focused will turns them into horsepower. Movement beats perfection today.","Loss of direction or a win-at-all-costs urge. If everything is a battle, you've lost the map — regroup before charging.","Passion with direction. Someone is pursuing — or being pursued — with real intent. Make sure the destination is shared.","Momentum is yours. A project, trip or application pushes through if you keep both hands on the wheel."],
+ ["Strength","VIII","♌","courage, patience, gentle power","Your power today is the quiet kind: patience, warmth and self-control. You don't need to roar — you need to stay.","Self-doubt or a temper flare. The beast isn't the problem; how tightly you're gripping is.","Tenderness tames what force cannot. A vulnerable conversation deepens trust more than grand gestures.","Diplomacy outperforms dominance. Handle the difficult person — or deadline — with calm persistence."],
+ ["The Hermit","IX","✦","solitude, wisdom, searching","Withdraw to recharge and reflect. The guidance you need is internal, and it speaks softly — give it silence to work in.","Isolation has tipped into loneliness, or advice is being refused out of pride. Come back down the mountain soon.","A pause for self-knowledge improves love. If single, you're clarifying what you actually want — that's progress.","Work alone on the deep problem. Mentorship — giving or receiving it — features strongly."],
+ ["Wheel of Fortune","X","☸","cycles, luck, turning point","The wheel turns in your favor. A shift of fortune, timing or circumstance is underway — stay loose and ready to move.","A run of friction or a cycle repeating. Bad timing isn't bad character; ride it out and learn the pattern.","Fate has a hand in this meeting. Connections made now tend to matter more than they first appear.","Timing is everything this week. A delayed project suddenly unsticks — be ready to say yes quickly."],
+ ["Justice","XI","⚖","truth, fairness, accountability","Truth and consequences are linked today. Decide fairly, sign carefully, and let the facts — not feelings — cast the deciding vote.","An unfair situation or a truth being avoided. Imbalance corrects itself eventually; better to correct it yourself.","Honesty is the foundation here. A relationship thrives when both sides keep the ledger — and the promises — clean.","Contracts, reviews and legal matters favor the prepared and the truthful. Document everything."],
+ ["The Hanged Man","XII","♆","surrender, new perspective, pause","Voluntary pause. What looks like a standstill is a viewpoint shift — hang loose and let the new angle reveal itself.","Stalling without purpose, or a sacrifice nobody asked for. If the pause teaches nothing, it's just a delay.","Love needs patience, not pressure. Seeing a partner's side — truly — changes the whole story.","A project benefits from suspension, not force. Use the wait to rethink the approach."],
+ ["Death","XIII","♇","endings, release, rebirth","Something is complete, and clearing it makes room for the truer thing. This card is rarely literal — it's a door closing so a better one opens.","Clinging to what's already over. The resistance hurts more than the ending would.","A relationship chapter ends or transforms completely. Release makes space for honesty — or for someone new.","A role, project or method has run its course. End it cleanly and reinvest the energy."],
+ ["Temperance","XIV","🕊","balance, moderation, alchemy","Blend, don't binge. The middle path isn't boring today — it's alchemy. Small, steady adjustments create something greater than the parts.","Excess or imbalance in one corner of life is draining the rest. Recalibrate gently rather than swinging to the other extreme.","A harmonious, healing connection. Differences blend instead of clashing — this one restores your faith.","Collaboration across different styles works beautifully. Pace yourself; sustainable beats heroic."],
+ ["The Devil","XV","⛓","attachment, temptation, shadow","Name the chain. A habit, craving or dynamic has more power than it should — and it keeps that power by staying unexamined.","Breaking free is underway. An unhealthy attachment loosens its grip; keep walking toward the light.","Intense chemistry with a warning label. Enjoy desire honestly, but notice where attraction turns into control.","A golden cage: money or comfort keeping you somewhere your soul has left. Count the real cost."],
+ ["The Tower","XVI","ϟ","upheaval, revelation, breakthrough","A truth arrives like lightning — sudden, clarifying, impossible to unsee. What falls was built on shaky ground; what remains is real.","A change is being resisted or delayed, prolonging the wobble. Better a planned demolition than a collapse.","A revelation shakes a relationship's foundations. Painful now, but honesty is the only ground worth rebuilding on.","Expect the unexpected at work. Have a plan B — and know that the shake-up exposes what was already broken."],
+ ["The Star","XVII","☆","hope, healing, renewal","After the storm, this: quiet hope and genuine renewal. You're more on-path than you think. Wish boldly and work gently.","Dimmed faith or healing done halfway. Your optimism isn't naive — it's a resource. Protect it.","A healing, hopeful connection — someone who sees your light clearly. Old wounds lose their charge.","Recognition and inspiration flow. Creative and public-facing work especially shines now."],
+ ["The Moon","XVIII","☽","dreams, illusion, the subconscious","Things are not entirely what they seem — and that's not a threat, it's an invitation. Dreams, art and intuition carry the real information now.","Confusion lifts soon. Anxiety has been exaggerating the shadows; wait for daylight before deciding.","Romantic fog: projections and mixed signals. Ask directly rather than decoding hints at 2 a.m.","Uncertainty at work is temporary. Don't sign in the fog — clarify timelines and expectations first."],
+ ["The Sun","XIX","☀","joy, vitality, success","Yes. Pure and simple — warmth, clarity and success light up the day. Say yes to the invitation, the plan, the spotlight.","Happiness delayed, not denied. A small cloud — burnout or doubt — is passing; don't mistake it for the climate.","Joyful, honest love. Play together. If it feels easy and bright, believe it.","Visibility and success. Launch, present, celebrate — your work deserves an audience right now."],
+ ["Judgement","XX","♆","awakening, calling, forgiveness","A calling — inner or outer — asks for an answer. Forgive the past its weight, assess honestly, and rise to the next level of your life.","Self-judgment turned harsh, or a needed wake-up call being snoozed. The review is kinder than you fear.","A relationship gets a second chance — if both people have genuinely changed. Forgiveness is the theme.","A review, evaluation or big decision goes well for the honest. It's time to step up, not back."],
+ ["The World","XXI","♁","completion, wholeness, arrival","A cycle completes beautifully. You've integrated the lesson and earned the arrival — celebrate, then let the next journey call.","Almost there: one loose end delays the celebration. Finish the final detail rather than starting something new.","A complete, balanced love — or meeting someone far from home. Wholeness attracts wholeness.","A major milestone lands: completion, promotion, launch. Your work may reach further than expected — possibly international."]
+];
+const SUITS={
+ Wands:{el:"Fire",dom:"passion, ambition and creative drive",glyph:"✷",love:"Sparks, adventure and desire run this story — the flame is real, feed it with honesty.",career:"Entrepreneurial energy: pitch, launch, lead. Momentum rewards the bold."},
+ Cups:{el:"Water",dom:"love, emotion and intuition",glyph:"♥",love:"Feelings deepen and soften. Vulnerability offered now will be met with care.",career:"Trust your read of people. Collaborative, creative and care-centered work flows."},
+ Swords:{el:"Air",dom:"thought, truth and clear communication",glyph:"✕",love:"Words matter most now — a clear, kind conversation clears the air.",career:"Strategy, analysis and honest feedback win. Decide with the head, verify with facts."},
+ Pentacles:{el:"Earth",dom:"money, work and the tangible world",glyph:"❖",love:"Love shows up practically — reliability, presence, building something real together.",career:"Steady effort compounds. Budgets, skills and long-term plans are favored."}
+};
+const RANKS=[
+ ["Ace","A","a powerful new beginning","seeds a breakthrough","a false start or blocked spark — the potential is there, the timing isn't"],
+ ["Two","2","a choice or partnership forms","brings balance and a key decision","indecision or a partnership out of sync — pause and re-weigh"],
+ ["Three","3","early growth and collaboration","shows first real results","delays or friction in the group — roles need clarifying"],
+ ["Four","4","stability and a foundation","consolidates what you've built","stagnation — the foundation holds, but nothing grows on it"],
+ ["Five","5","conflict or challenge","tests your commitment","the tension eases — lessons from the friction are ready to use"],
+ ["Six","6","harmony and recognition","restores balance and goodwill","an imbalance lingers — generosity or apology is owed somewhere"],
+ ["Seven","7","assessment and strategy","asks you to defend your position wisely","scattered focus — too many fronts, not enough strategy"],
+ ["Eight","8","swift movement and momentum","accelerates progress noticeably","delays and mixed messages — momentum stalls until one thing is clarified"],
+ ["Nine","9","near-completion and resilience","rewards persistence","weariness — you're close, but running on empty; rest is productive"],
+ ["Ten","10","completion and culmination","brings a cycle to its full result","an ending drags or a burden feels heavier than it should"],
+ ["Page","Pg","a curious messenger energy","brings news and a learning opportunity","gossip, delays or a message misunderstood — double-check before reacting"],
+ ["Knight","Kn","bold, questing action","charges toward the goal","haste or restlessness — speed without direction scatters the quest"],
+ ["Queen","Q","mature, magnetic mastery","embodies the suit at its wisest","insecurity or over-giving — mastery includes boundaries"],
+ ["King","K","commanding, seasoned authority","leads with experience and control","rigidity or misuse of influence — authority works best with warmth"]
+];
+function buildDeck(){
+ const deck=[];
+ MAJORS.forEach((m,i)=>deck.push({name:m[0],num:m[1],sym:m[2],kw:m[3],up:m[4],rev:m[5],love:m[6],career:m[7],arcana:"Major Arcana",img:String(i).padStart(2,"0")+"-"+m[0].toLowerCase().replace(/^the /,"").replace(/\s+/g,"-")}));
+ Object.keys(SUITS).forEach(suit=>{
+   const S=SUITS[suit];
+   RANKS.forEach(r=>{
+     deck.push({name:r[0]+" of "+suit,num:r[1],sym:S.glyph,
+       kw:r[2]+" · "+S.dom,
+       up:"The "+r[0]+" of "+suit+" "+r[3]+" in the realm of "+S.dom+". "+S.career.split(". ")[0]+".",
+       rev:"Reversed, this card signals "+r[4]+", within "+S.dom+". Slow down and address the blockage directly.",
+       love:S.love,career:S.career,arcana:"Suit of "+suit,img:(r[0]+" of "+suit).toLowerCase().replace(/\s+/g,"-")});
+   });
+ });
+ return deck;
+}
+const DECK=buildDeck();
+const LIFEPATH={
+ 1:{t:"The Leader",x:"Independent, pioneering and self-reliant. Your road asks you to go first — to start things, stand alone when needed, and trust your own direction. Life lesson: strength without isolation."},
+ 2:{t:"The Diplomat",x:"Sensitive, intuitive and partnership-oriented. Your road is built on connection — you are the peacekeeper and the quiet power behind the throne. Life lesson: harmony without self-erasure."},
+ 3:{t:"The Creator",x:"Expressive, joyful and magnetic. Your road runs through words, art and laughter — you are here to lift the room. Life lesson: depth beneath the sparkle."},
+ 4:{t:"The Builder",x:"Practical, loyal and relentless. Your road is constructed brick by brick — systems, security and things that last. Life lesson: stability without rigidity."},
+ 5:{t:"The Freedom Seeker",x:"Curious, restless and experience-hungry. Your road winds through change, travel and reinvention. Life lesson: freedom with focus."},
+ 6:{t:"The Nurturer",x:"Devoted, responsible and heart-led. Your road centers on home, family and service done beautifully. Life lesson: care without martyrdom."},
+ 7:{t:"The Seeker",x:"Analytical, spiritual and private. Your road leads inward — research, reflection and truths most people never stop to find. Life lesson: trust alongside analysis."},
+ 8:{t:"The Powerhouse",x:"Ambitious, capable and abundance-minded. Your road involves mastery of the material world — money, business, influence. Life lesson: power with integrity."},
+ 9:{t:"The Old Soul",x:"Compassionate, wise and idealistic. Your road is about giving, healing and letting go — you carry lessons from many lifetimes. Life lesson: love without attachment."},
+ 11:{t:"The Illuminator (Master Number)",x:"Intuitive, inspired and electric. You carry the 2's sensitivity amplified into spiritual insight — a lighthouse for others. Life lesson: grounding your gifts so they don't overwhelm you."},
+ 22:{t:"The Master Builder (Master Number)",x:"Visionary and practical in rare combination. You carry the 4's craft amplified to legacy scale — you are here to build what outlives you. Life lesson: patience with the size of your own vision."}
+};
+const HORO_OPEN=["The Moon lends today an unusually honest light, {sign}.","Today's sky favors the brave-hearted, {sign}.","A quiet shift in the Moon's mood colors everything today, {sign}.","The stars are rearranging the furniture of your week, {sign}.","Today hums with potential, {sign} — the kind you have to reach for.","There's electricity in today's chart, {sign}, and it's pointed at you."];
+const HORO_FOCUS=["Your focus: a conversation you've been postponing is ready to happen — and it goes better than you fear.","Your focus: money and value. A small financial decision today has longer legs than it looks.","Your focus: your closest relationships. Show up fully once, and watch the whole dynamic warm.","Your focus: the project that keeps tapping your shoulder. Give it the first hour of your day.","Your focus: rest as strategy. The answer you're chasing arrives when you stop chasing it.","Your focus: home and foundations. One small improvement to your space changes your whole head."];
+const HORO_LOVE=["In love: warmth is returned in kind — be the first to offer it.","In love: someone is listening more closely than you realize. Say the true thing.","In love: an old pattern loosens. Let the new dynamic breathe before you judge it.","In love: playfulness is the shortest path to closeness today."];
+const HORO_CAREER=["At work: your quiet competence gets noticed by exactly the right person.","At work: a door you thought was closed is actually ajar. Push gently.","At work: collaboration beats solo brilliance today — bring someone in.","At work: finish the boring thing first; freedom follows it."];
+const HORO_COLORS=["champagne gold","deep violet","midnight blue","rose blush","sage green","burnt amber","silver mist","plum"];
+const COMPAT_EL={ "Fire-Fire":"Two flames together — the heat is undeniable, and so is the need for oxygen.","Fire-Air":"Air feeds fire: this pairing thinks fast, moves fast and rarely bores.","Fire-Earth":"Fire wants now; Earth wants forever. The friction can forge something strong — or scorch the plans.","Fire-Water":"Steam or wildfire-doused: intensity meets depth here, and both must learn the other's language.","Air-Air":"A meeting of minds first — conversation is the love language of this pair.","Air-Earth":"Air dreams in concepts, Earth in results. Together they can build castles that actually stand.","Air-Water":"Mind meets heart. Feelings need translating here, but the poetry is worth it.","Earth-Earth":"Two builders, one blueprint. Slow, sensual and nearly unshakeable once committed.","Earth-Water":"Water nourishes earth; earth gives water banks to flow between. A naturally fertile pairing.","Water-Water":"One shared ocean of feeling. The bond is psychic — and needs occasional dry land."};
+</script>
+
+<script>
+/* ============ LOGIC (pure — no DOM) ============ */
+const SYNODIC=29.530588853;
+const norm360=d=>((d%360)+360)%360;
+const rad=d=>d*Math.PI/180, deg=r=>r*180/Math.PI;
+function julianDay(date){return date.getTime()/86400000+2440587.5;}
+function moonAge(date){const ref=Date.UTC(2000,0,6,18,14)/86400000;const now=date.getTime()/86400000;return ((now-ref)%SYNODIC+SYNODIC)%SYNODIC;}
+function moonPhase(date){
+  const age=moonAge(date), f=age/SYNODIC;
+  const illum=(1-Math.cos(2*Math.PI*f))/2;
+  let name;
+  if(f<0.033||f>0.967)name="New Moon"; else if(f<0.217)name="Waxing Crescent";
+  else if(f<0.283)name="First Quarter"; else if(f<0.467)name="Waxing Gibbous";
+  else if(f<0.533)name="Full Moon"; else if(f<0.717)name="Waning Gibbous";
+  else if(f<0.783)name="Last Quarter"; else name="Waning Crescent";
+  return {age:age,f:f,illum:illum,name:name,waxing:f<0.5};
+}
+function daysToPhase(date,targetF){
+  const f=moonPhase(date).f; let d=(targetF-f+SYNODIC/SYNODIC)%1; if(d<0)d+=1;
+  return d*SYNODIC;
+}
+function fmtDate(d){return d.toLocaleDateString("en-US",{month:"short",day:"numeric"});}
+function nextPhaseDate(date,targetF){return new Date(date.getTime()+daysToPhase(date,targetF)*86400000);}
+function sunLongitude(date){
+  const d=julianDay(date)-2451545.0;
+  const g=norm360(357.529+0.98560028*d), L=norm360(280.459+0.98564736*d);
+  return norm360(L+1.915*Math.sin(rad(g))+0.020*Math.sin(rad(2*g)));
+}
+function moonLongitude(date){
+  const d=julianDay(date)-2451545.0;
+  const L=norm360(218.3165+13.17639648*d), M=norm360(134.9634+13.06499295*d),
+        D=norm360(297.8502+12.19074912*d), F=norm360(93.2721+13.22935024*d),
+        Ms=norm360(357.5291+0.98560028*d);
+  let lon=L+6.2888*Math.sin(rad(M))+1.274*Math.sin(rad(2*D-M))+0.658*Math.sin(rad(2*D))
+           +0.2136*Math.sin(rad(2*M))-0.1855*Math.sin(rad(Ms))-0.1143*Math.sin(rad(2*F));
+  return norm360(lon);
+}
+function signFromLongitude(lon){return SIGNS[Math.floor(norm360(lon)/30)];}
+function sunSign(date){
+  const m=date.getMonth()+1, day=date.getDate();
+  const bounds=[[1,19,"Capricorn","Aquarius"],[2,18,"Aquarius","Pisces"],[3,20,"Pisces","Aries"],[4,19,"Aries","Taurus"],[5,20,"Taurus","Gemini"],[6,21,"Gemini","Cancer"],[7,22,"Cancer","Leo"],[8,22,"Leo","Virgo"],[9,22,"Virgo","Libra"],[10,23,"Libra","Scorpio"],[11,22,"Scorpio","Sagittarius"],[12,21,"Sagittarius","Capricorn"]];
+  const b=bounds[m-1]; const name=day<=b[1]?b[2]:b[3];
+  return SIGNS.find(s=>s.n===name);
+}
+function risingSign(dateUTC,lat,lon){
+  const d=julianDay(dateUTC)-2451545.0;
+  const gmst=norm360(280.46061837+360.98564736629*d);
+  const lst=rad(norm360(gmst+lon)), eps=rad(23.4393), phi=rad(lat);
+  let asc=deg(Math.atan2(Math.cos(lst),-(Math.sin(lst)*Math.cos(eps)+Math.tan(phi)*Math.sin(eps))));
+  return signFromLongitude(asc);
+}
+function bigThree(dateStr,timeStr,lat,lon,tzOffset){
+  const local=new Date(dateStr+"T"+(timeStr||"12:00")+":00Z");
+  const utc=new Date(local.getTime()-tzOffset*3600000);
+  return {sun:sunSign(utc),moon:signFromLongitude(moonLongitude(utc)),rising:risingSign(utc,lat,lon),utc:utc};
+}
+function lifePath(dateStr){
+  let digits=dateStr.replace(/-/g,"").split("").map(Number);
+  let sum=digits.reduce((a,b)=>a+b,0);
+  while(sum>9&&sum!==11&&sum!==22){ sum=String(sum).split("").map(Number).reduce((a,b)=>a+b,0); }
+  return sum;
+}
+function strHash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return Math.abs(h);}
+function seededPick(arr,seed){return arr[strHash(seed)%arr.length];}
+function dailyCard(date){
+  const key=date.toISOString().slice(0,10);
+  const idx=strHash("card-"+key)%78;
+  const rev=strHash("rev-"+key)%3===0;
+  return {card:DECK[idx],reversed:rev};
+}
+function dailyHoroscope(signName,date){
+  const key=signName+"-"+date.toISOString().slice(0,10);
+  const ph=moonPhase(date);
+  return {
+    open:seededPick(HORO_OPEN,key+"o").replace("{sign}",signName),
+    focus:seededPick(HORO_FOCUS,key+"f"),
+    love:seededPick(HORO_LOVE,key+"l"),
+    career:seededPick(HORO_CAREER,key+"c"),
+    moon:"Moon note: under a "+ph.name.toLowerCase()+", "+(ph.waxing?"intentions planted now gather strength — start small and start today.":"release is the work — let one old thing end cleanly."),
+    lucky:strHash(key+"n")%99+1,
+    color:seededPick(HORO_COLORS,key+"col")
+  };
+}
+function compatScore(a,b){
+  if(a.n===b.n) return 84+strHash(a.n+"same")%12;
+  const key=[a.el,b.el].sort().join("-");
+  const base={"Air-Fire":86,"Earth-Water":85,"Air-Air":82,"Earth-Earth":84,"Fire-Fire":83,"Water-Water":85,"Earth-Fire":58,"Fire-Water":55,"Air-Earth":62,"Air-Water":64}[key]||65;
+  return Math.max(35,Math.min(97,base+(strHash(a.n+b.n)%13)-6));
+}
+function compatText(a,b){
+  const key=[a.el,b.el].sort().join("-");
+  const el=COMPAT_EL[key]||"An intriguing mix of elements — this pairing writes its own rules.";
+  const s=compatScore(a,b);
+  const verdict=s>=80?"A genuinely strong match — the kind that deepens with time.":s>=65?"Real potential here, with a few honest adjustments needed.":"A growth pairing: magnetic, challenging, and transformative if both are willing.";
+  return {score:s,el:el,verdict:verdict,
+    strength:a.n+" brings "+a.tr+" energy; "+b.n+" answers with "+b.tr+". Together the chemistry is written in their elements.",
+    friction:"Friction point: "+a.n+" is ruled by "+a.ruler+" and "+b.n+" by "+b.ruler+" — different instincts under pressure. Naming the pattern early keeps small sparks from becoming fires."};
+}
+function moonSVG(f,size){
+  const r=44,c=50,rx=Math.max(0.5,Math.abs(Math.cos(2*Math.PI*f))*r);
+  const lit="#eed9a0",dark="#241b47",edge="#9a7f3f";
+  const half=f<0.5?("M "+c+" "+(c-r)+" A "+r+" "+r+" 0 0 1 "+c+" "+(c+r)+" Z"):("M "+c+" "+(c-r)+" A "+r+" "+r+" 0 0 0 "+c+" "+(c+r)+" Z");
+  const ellipseFill=(f>0.25&&f<0.75)?lit:dark;
+  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 100 100" aria-hidden="true">'
+    +'<circle cx="50" cy="50" r="44" fill="'+dark+'" stroke="'+edge+'" stroke-width="1.5"/>'
+    +'<path d="'+half+'" fill="'+lit+'"/>'
+    +'<ellipse cx="50" cy="50" rx="'+rx.toFixed(1)+'" ry="44" fill="'+ellipseFill+'"/>'
+    +'<circle cx="50" cy="50" r="44" fill="none" stroke="'+edge+'" stroke-width="1.5"/></svg>';
+}
+if(typeof module!=="undefined"&&module.exports){module.exports={moonPhase:moonPhase,moonLongitude:moonLongitude,sunLongitude:sunLongitude,sunSign:sunSign,risingSign:risingSign,bigThree:bigThree,lifePath:lifePath,dailyCard:dailyCard,DECK:DECK,compatScore:compatScore,SIGNS:SIGNS};}
+
+/* ============ DOM (browser only) ============ */
+if(typeof document!=="undefined"){
+document.addEventListener("DOMContentLoaded",function(){
+  const $=id=>document.getElementById(id);
+  const now=new Date();
+  /* stars */
+  (function(){const cv=$("stars"),ctx=cv.getContext("2d");function size(){cv.width=innerWidth;cv.height=innerHeight;ctx.clearRect(0,0,cv.width,cv.height);for(let i=0;i<130;i++){const x=Math.random()*cv.width,y=Math.random()*cv.height,r=Math.random()*1.3+0.3;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle="rgba(238,217,160,"+(0.25+Math.random()*0.5)+")";ctx.fill();}}size();addEventListener("resize",size);})();
+  /* hero moon */
+  const ph=moonPhase(now);
+  $("heroMoon").innerHTML=moonSVG(ph.f,110);
+  $("heroPhaseName").textContent=ph.name;
+  $("heroPhaseSub").textContent="The Moon is "+(ph.waxing?"waxing — growing toward fullness.":"waning — releasing toward renewal.")+" Let tonight's reading meet you where you are.";
+  $("mfIllum").textContent=Math.round(ph.illum*100)+"%";
+  $("mfAge").textContent=ph.age.toFixed(1)+" days";
+  $("mfFull").textContent=fmtDate(nextPhaseDate(now,0.5));
+  $("mfNew").textContent=fmtDate(nextPhaseDate(now,0.0));
+  /* daily card */
+  const dc=dailyCard(now);
+  function cardHTML(card,rev,label){
+    return '<div><div class="pos-label">'+label+'</div><div class="tcard flipped"><div class="inner">'
+      +'<div class="face back"><span class="bigmoon">☾</span></div>'
+      +'<div class="face front"><img class="cardart'+(rev?" rev":"")+'" src="assets/cards/'+card.img+'.jpg" alt="'+card.name+' tarot card artwork">'
+      +'<div class="cband"><div class="num">'+card.num+" · "+card.arcana+'</div><div class="cname">'+card.name+'</div>'
+      +'<div class="ckey">'+card.kw.split(" · ")[0]+'</div></div>'
+      +(rev?'<div class="revtag">Reversed</div>':"")+'</div></div></div></div>';
+  }
+  $("dailyCardZone").innerHTML=cardHTML(dc.card,dc.reversed,"For everyone · "+now.toLocaleDateString("en-US",{month:"long",day:"numeric"}));
+  $("dailyCardNote").innerHTML="<b>"+dc.card.name+(dc.reversed?" (reversed)":"")+"</b> — "+dc.card.kw+". "+(dc.reversed?dc.card.rev:dc.card.up);
+  /* horoscope picker */
+  let selSign=null;
+  const picker=$("signPicker");
+  SIGNS.forEach(function(s){
+    const b=document.createElement("button");b.className="signbtn";b.type="button";
+    b.innerHTML='<img class="signart" src="assets/signs/'+s.n.toLowerCase()+'.jpg" alt="'+s.n+' artwork"><span class="n">'+s.g+" "+s.n+'</span><span class="d">'+s.d+'</span>';
+    b.addEventListener("click",function(){
+      picker.querySelectorAll(".signbtn").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");selSign=s;
+      const h=dailyHoroscope(s.n,now), r=$("horoResult");
+      r.innerHTML='<img src="assets/signs/'+s.n.toLowerCase()+'.jpg" alt="'+s.n+' artwork" style="width:100%;height:132px;object-fit:cover;border-radius:9px;margin-bottom:10px"><h3 style="font-size:1.4rem">'+s.g+" "+s.n+" today</h3>"
+        +"<p style='margin-top:6px'>"+h.open+"</p><p style='margin-top:8px'>"+h.focus+"</p>"
+        +"<p style='margin-top:8px'>"+h.love+"</p><p style='margin-top:8px'>"+h.career+"</p>"
+        +"<p style='margin-top:8px'>"+h.moon+"</p>"
+        +"<p style='margin-top:10px;color:var(--gold-soft)'>Lucky number "+h.lucky+" · Lucky color "+h.color+" · Element "+s.el+" · Ruled by "+s.ruler+"</p>";
+      r.classList.add("show");
+    });
+    picker.appendChild(b);
+  });
+  /* draw tool */
+  function drawCards(n){
+    const zone=$("drawZone");zone.innerHTML="";
+    const idxs=new Set();while(idxs.size<n)idxs.add(Math.floor(Math.random()*78));
+    const labels=n===3?["Past","Present","Future"]:["Your Answer"];
+    const notes=[];
+    Array.from(idxs).forEach(function(ix,i){
+      const card=DECK[ix], rev=Math.random()<0.33;
+      const wrap=document.createElement("div");
+      wrap.innerHTML=cardHTML(card,rev,labels[i]);
+      const tc=wrap.querySelector(".tcard");tc.classList.remove("flipped");
+      zone.appendChild(wrap);
+      setTimeout(()=>tc.classList.add("flipped"),120*i+60);
+      notes.push("<b>"+labels[i]+": "+card.name+(rev?" (reversed)":"")+"</b> — "+(rev?card.rev:card.up));
+    });
+    $("drawNote").innerHTML=notes.join("<br><br>");
+  }
+  $("draw1").addEventListener("click",()=>drawCards(1));
+  $("draw3").addEventListener("click",()=>drawCards(3));
+  /* birth chart */
+  $("bcGo").addEventListener("click",function(){
+    const bt=bigThree($("bcDate").value,$("bcTime").value,parseFloat($("bcLat").value)||0,parseFloat($("bcLon").value)||0,parseFloat($("bcTz").value)||0);
+    function cell(k,sig,txt){return '<div class="cell"><img src="assets/signs/'+sig.n.toLowerCase()+'.jpg" alt="'+sig.n+' artwork" style="width:100%;height:96px;object-fit:cover;border-radius:7px;margin-bottom:9px"><div class="k">'+k+'</div><div class="glyph">'+sig.g+'</div><div class="sign">'+sig.n+'</div><p>'+txt+'</p></div>';}
+    const r=$("bcResult");
+    r.innerHTML='<div class="big3">'+cell("Sun · your core",bt.sun,bt.sun.sun)+cell("Moon · your heart",bt.moon,bt.moon.moon)+cell("Rising · your aura",bt.rising,bt.rising.ris)+'</div>'
+      +'<p style="margin-top:14px;color:var(--muted)">'+bt.sun.n+" Sun, "+bt.moon.n+" Moon, "+bt.rising.n+" Rising — you lead with "+bt.rising.tr.split(",")[0]+" energy, shine as "+bt.sun.tr+", and feel most at home when life honors your "+bt.moon.n+" heart. Instant estimate computed privately in your browser.</p>";
+    r.classList.add("show");
+  });
+  /* compatibility */
+  const cpA=$("cpA"),cpB=$("cpB");
+  SIGNS.forEach(function(s){cpA.add(new Option(s.g+" "+s.n,s.n));cpB.add(new Option(s.g+" "+s.n,s.n));});
+  cpA.value="Leo";cpB.value="Sagittarius";
+  $("cpGo").addEventListener("click",function(){
+    const a=SIGNS.find(s=>s.n===cpA.value), b=SIGNS.find(s=>s.n===cpB.value), t=compatText(a,b), r=$("cpResult");
+    r.innerHTML='<div style="display:flex;gap:10px;margin-bottom:12px"><img src="assets/signs/'+a.n.toLowerCase()+'.jpg" alt="'+a.n+' artwork" style="flex:1;min-width:0;height:118px;object-fit:cover;border-radius:9px"><img src="assets/signs/'+b.n.toLowerCase()+'.jpg" alt="'+b.n+' artwork" style="flex:1;min-width:0;height:118px;object-fit:cover;border-radius:9px"></div><div class="scorewrap"><div style="color:var(--muted)">'+a.g+" "+a.n+" × "+b.n+" "+b.g+'</div><div class="score">'+t.score+'%</div><div class="scorebar"><i style="width:'+t.score+'%"></i></div></div>'
+      +"<p>"+t.el+"</p><p style='margin-top:8px'>"+t.strength+"</p><p style='margin-top:8px'>"+t.friction+"</p>"
+      +"<p style='margin-top:10px;color:var(--gold-soft)'>"+t.verdict+"</p>";
+    r.classList.add("show");
+  });
+  /* zodiac grid */
+  (function(){
+    const zg=$("zodiacGrid"); if(!zg)return;
+    SIGNS.forEach(function(s){
+      const d=document.createElement("div");d.className="panel";
+      d.innerHTML='<a href="signs/'+s.n.toLowerCase()+'.html"><img class="zodimg" src="assets/signs/'+s.n.toLowerCase()+'.jpg" alt="'+s.n+' zodiac artwork"></a>'
+        +'<h3>'+s.g+" "+s.n+'</h3><p>'+s.d+" · "+s.el+" · ruled by "+s.ruler+'<br>'+s.tr+'</p>'
+        +'<a class="go" href="signs/'+s.n.toLowerCase()+'.html">Visit '+s.n+' →</a>';
+      zg.appendChild(d);
+    });
+  })();
+  /* moon calendar */
+  (function(){
+    const y=now.getFullYear(), mo=now.getMonth();
+    $("calTitle").textContent=now.toLocaleDateString("en-US",{month:"long",year:"numeric"})+" — the moon, day by day.";
+    const first=new Date(y,mo,1); const startOffset=(first.getDay()+6)%7; const days=new Date(y,mo+1,0).getDate();
+    let html="";
+    for(let i=0;i<startOffset;i++)html+='<div class="calcell" style="opacity:.25"></div>';
+    const keys=[];
+    for(let d=1;d<=days;d++){
+      const dt=new Date(y,mo,d,12), p=moonPhase(dt);
+      const isToday=d===now.getDate();
+      const q=Math.floor(((p.f+0.125)%1)*4), qp=Math.floor(((moonPhase(new Date(y,mo,d-1,12)).f+0.125)%1)*4);
+      let pn=""; if(q!==qp){pn=["New Moon","First Quarter","Full Moon","Last Quarter"][q];keys.push(pn+" — "+fmtDate(dt));}
+      html+='<div class="calcell'+(isToday?" today":"")+'"><div class="d">'+d+'</div>'+moonSVG(p.f,26)+(pn?'<span class="pn">'+pn+'</span>':"")+'</div>';
+    }
+    $("calGrid").innerHTML=html;
+    $("calKey").textContent="Key dates: "+keys.join(" · ");
+  })();
+  /* numerology */
+  $("numGo").addEventListener("click",function(){
+    const v=$("numDate").value; if(!v)return;
+    const n=lifePath(v), info=LIFEPATH[n], r=$("numResult");
+    r.innerHTML='<div class="scorewrap"><div class="score">'+n+'</div><div style="font-family:var(--serif);font-size:1.5rem;color:var(--gold-soft)">'+info.t+'</div></div><p style="margin-top:10px">'+info.x+'</p>';
+    r.classList.add("show");
+  });
+  /* library */
+  const lib=$("libGrid");
+  function renderLib(filter){
+    lib.innerHTML="";
+    DECK.filter(c=>!filter||(c.name+" "+c.kw+" "+c.arcana).toLowerCase().includes(filter.toLowerCase())).forEach(function(c){
+      const b=document.createElement("button");b.className="libcard";b.type="button";
+      b.innerHTML='<img class="libimg" src="assets/cards/'+c.img+'.jpg" alt="'+c.name+' artwork"><span class="n">'+c.name+'</span><span class="k">'+c.kw+'</span>';
+      b.addEventListener("click",function(){
+        $("mArt").src="assets/cards/"+c.img+".jpg"; $("mGlyph").textContent=c.sym; $("mName").textContent=c.name; $("mKeys").textContent=c.kw;
+        $("mUp").textContent=c.up; $("mRev").textContent=c.rev; $("mLove").textContent=c.love; $("mCareer").textContent=c.career;
+        $("cardModal").classList.add("open");
+      });
+      lib.appendChild(b);
+    });
+  }
+  renderLib("");
+  $("libSearch").addEventListener("input",e=>renderLib(e.target.value));
+  $("modalX").addEventListener("click",()=>$("cardModal").classList.remove("open"));
+  $("cardModal").addEventListener("click",function(e){if(e.target===this)this.classList.remove("open");});
+});
+}
+</script>
+</body>
+</html>
