@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarot Spreads — Free Three-Card, Celtic Cross & More</title>
+<meta name="description" content="Free tarot spreads at MoonPhase Tarot: the three-card spread is live now, with Celtic Cross, love, career and one-card spreads coming soon. Free, no signup.">
+<link rel="canonical" href="https://oddjack0.github.io/moonphase-tarot/tarot-spreads/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0918;--bg2:#130e28;--panel:#1a1338;--panel2:#211a47;--gold:#d9b45b;--gold-soft:#eed9a0;--gold-dim:#9a7f3f;--ink:#f0e9da;--muted:#b3a8cf;--faint:#7e74a3;--line:rgba(217,180,91,.28);--line-soft:rgba(217,180,91,.14);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.65}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--serif)}
+a{color:var(--gold-soft)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:10px;flex-wrap:wrap}
+.topbar a{text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.topbar a:hover{color:var(--gold-soft)}
+.topbar .brand{font-family:var(--serif);font-size:1.3rem;text-transform:none;letter-spacing:.03em;color:var(--ink)}
+.crumb{font-size:.85rem;color:var(--faint);margin:14px 0 4px}
+.crumb a{text-decoration:none}
+.hero{padding:34px 0 10px;text-align:center}
+.eyebrow{letter-spacing:.34em;text-transform:uppercase;font-size:.72rem;color:var(--gold);margin-bottom:12px}
+.hero h1{font-size:clamp(2.4rem,6vw,3.9rem);font-weight:600;line-height:1.08}
+.hero h1 em{font-style:italic;color:var(--gold-soft)}
+.hero p.lede{max-width:660px;margin:16px auto 0;color:var(--muted);font-size:1.05rem}
+section{padding:30px 0 4px}
+h2{font-size:1.9rem;font-weight:600;margin-bottom:10px}
+h2 em{font-style:italic;color:var(--gold-soft)}
+h3{font-size:1.35rem;color:var(--gold-soft);margin:18px 0 6px}
+p.body{color:var(--muted);margin-bottom:12px;font-size:1.02rem}
+.rule{width:74px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0;position:relative}
+.rule::after{content:"\263E";position:absolute;left:50%;top:-11px;transform:translateX(-50%);color:var(--gold);background:var(--bg);padding:0 8px;font-size:.85rem}
+.panel{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:14px;padding:24px}
+.toolbox{max-width:760px;margin:0 auto;background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:14px;padding:28px;text-align:center}
+.btn{display:inline-block;padding:12px 26px;border-radius:999px;border:1px solid var(--gold);color:#17102a;background:linear-gradient(180deg,var(--gold-soft),var(--gold));font-family:var(--sans);font-weight:500;letter-spacing:.06em;text-decoration:none;cursor:pointer;font-size:.95rem}
+.btn.ghost{background:transparent;color:var(--gold-soft)}
+.fld label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px}
+.fld input{width:100%;background:#0f0b22;border:1px solid var(--line-soft);border-radius:9px;color:var(--ink);padding:11px 12px;font-family:var(--sans);font-size:.97rem}
+.fld input:focus{outline:none;border-color:var(--gold)}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.95rem}
+th{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+td{padding:10px 8px;border-bottom:1px solid var(--line-soft);color:var(--muted)}
+td b{color:var(--ink);font-weight:500}
+td a{white-space:nowrap}
+.month{border-top:1px solid var(--line-soft);padding-top:8px}
+.faq{margin-bottom:16px}
+.faq h3{color:var(--ink)}
+.faq p{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}table{font-size:.85rem}}
+.cell{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.cell .k{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
+.cell p{color:var(--muted);font-size:.94rem}
+.cell ul{list-style:none}
+.cell li{color:var(--muted);font-size:.94rem;margin-bottom:8px;padding-left:16px;position:relative}
+.cell li::before{content:"\2726";position:absolute;left:0;color:var(--gold);font-size:.7rem;top:3px}
+.verdict{font-family:var(--serif);font-size:clamp(2.6rem,8vw,4.2rem);font-weight:700;color:var(--gold-soft);line-height:1}
+.cardimg{width:100%;max-width:260px;height:400px;object-fit:cover;border-radius:12px;border:1px solid var(--gold-dim);display:block;margin:0 auto}
+.cardimg.rev{transform:rotate(180deg)}
+.result{display:none;margin-top:20px;border-top:1px solid var(--line-soft);padding-top:20px}
+.result.show{display:block}
+footer{border-top:1px solid var(--line-soft);margin-top:40px;padding:22px 0 40px;color:var(--faint);font-size:.82rem}
+footer .cols{display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--gold-soft)}
+.disc{margin-top:16px;max-width:760px;line-height:1.55}
+.tag{display:inline-block;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:99px;padding:3px 10px;margin-bottom:10px}
+.count{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);color:var(--gold-soft)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ItemList", "name": "Tarot Spreads", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Three-Card Spread (Past, Present & Future)", "url": "https://oddjack0.github.io/moonphase-tarot/tarot/three-card-spread/"}, {"@type": "ListItem", "position": 2, "name": "Celtic Cross"}, {"@type": "ListItem", "position": 3, "name": "Love Spread"}, {"@type": "ListItem", "position": 4, "name": "Career Spread"}, {"@type": "ListItem", "position": 5, "name": "One-Card Draw"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://oddjack0.github.io/moonphase-tarot/"}, {"@type": "ListItem", "position": 2, "name": "Tarot Spreads", "item": "https://oddjack0.github.io/moonphase-tarot/tarot-spreads/"}]}</script>
+
+</head>
+<body>
+<div class="wrap">
+<div class="topbar"><a href="../index.html">&#8592; Home</a><a class="brand" href="../index.html">&#9789; MoonPhase Tarot</a><a href="../index.html#daily">Today&rsquo;s Reading</a></div>
+<p class="crumb"><a href="../index.html">Home</a> &rsaquo; Tarot Spreads</p>
+<div class="hero"><div class="eyebrow">Free tarot spreads &middot; no signup</div>
+<h1>Tarot Spreads</h1>
+<p class="lede">Every MoonPhase Tarot spread in one place &mdash; start with the three-card spread today, and watch this hub grow as new spreads arrive.</p><div class="rule"></div></div>
+<section><div class="grid2"><div class="cell"><div class="k">Live Now · Free</div><h3><a href="../tarot/three-card-spread/">Three-Card Spread (Past, Present & Future)</a></h3><p>The classic three-card reading: what shaped your situation, where it stands now, and where it is heading, with a summary tying all three together.</p><p><a href="../tarot/three-card-spread/">Try the three-card spread &rarr;</a></p></div><div class="cell"><div class="k">Coming Soon</div><h3>Celtic Cross</h3><p>The ten-card deep dive into a situation: influences, hopes, fears and outcome. Coming soon.</p></div><div class="cell"><div class="k">Coming Soon</div><h3>Love Spread</h3><p>A spread for relationships: you, your partner, the connection between you, and where it is going. Coming soon.</p></div><div class="cell"><div class="k">Coming Soon</div><h3>Career Spread</h3><p>A spread for work and calling: your strengths, the obstacle, the opportunity and the next step. Coming soon.</p></div><div class="cell"><div class="k">Coming Soon</div><h3>One-Card Draw</h3><p>A single card for a quick daily focus or a moment of clarity. Coming soon.</p></div></div></section>
+<section><div class="panel"><h2>Not Sure Where to Start?</h2>
+<p class="body">Begin with the <a href="../tarot/three-card-spread/">three-card spread</a>: it suits almost any question and takes two minutes. For a single yes-or-no answer, try the <a href="../yes-no-tarot/">yes or no tarot reading</a> instead. And for the moon's own timing, see the <a href="../full-moon-calendar-2026/">full moon calendar 2026</a>.</p>
+<p class="body">Every spread on MoonPhase Tarot is free, needs no signup, and is offered for entertainment and self-reflection.</p></div></section>
+<footer><div class="cols"><div><div style="font-family:var(--serif);font-size:1.25rem"><span style="color:var(--gold)">&#9789;</span> Moon<em style="color:var(--gold-soft)">Phase</em> Tarot</div>
+<p style="margin-top:8px;max-width:300px">Free daily tarot, horoscopes, moon phases and birth charts &mdash; made with care, updated by the moon.</p></div>
+<div><p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Explore</p>
+<p><a href="../index.html">Home</a></p><p><a href="../tarot/three-card-spread/">Three-Card Spread</a></p><p><a href="../yes-no-tarot/">Yes or No Tarot</a></p><p><a href="../full-moon-calendar-2026/">Full Moon Calendar 2026</a></p></div>
+<div><p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Our Shops</p>
+<p><a href="https://ko-fi.com/oddjack/shop" target="_blank" rel="noopener">Ko-fi &mdash; digital downloads</a></p>
+<p><a href="https://www.redbubble.com/people/Odd-jack/shop" target="_blank" rel="noopener">Redbubble &mdash; printed goods</a></p></div></div>
+<p class="disc">For entertainment and self-reflection purposes only. Astrology and tarot readings are not a substitute for professional advice on medical, legal, financial or mental-health matters.</p><p style="margin-top:14px">&copy; 2026 MoonPhase Tarot &middot; Part of the Odd-jack studio family</p></footer>
+</div>
+</body>
+</html>

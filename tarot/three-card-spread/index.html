@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three-Card Tarot Spread — Past, Present & Future Reading</title>
+<meta name="description" content="Free three-card tarot spread: past, present and future positions with card meanings and an overall summary. Free, no signup.">
+<link rel="canonical" href="https://oddjack0.github.io/moonphase-tarot/tarot/three-card-spread/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0918;--bg2:#130e28;--panel:#1a1338;--panel2:#211a47;--gold:#d9b45b;--gold-soft:#eed9a0;--gold-dim:#9a7f3f;--ink:#f0e9da;--muted:#b3a8cf;--faint:#7e74a3;--line:rgba(217,180,91,.28);--line-soft:rgba(217,180,91,.14);--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.65}
+.wrap{max-width:940px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--serif)}
+a{color:var(--gold-soft)}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:10px;flex-wrap:wrap}
+.topbar a{text-decoration:none;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.topbar a:hover{color:var(--gold-soft)}
+.topbar .brand{font-family:var(--serif);font-size:1.3rem;text-transform:none;letter-spacing:.03em;color:var(--ink)}
+.crumb{font-size:.85rem;color:var(--faint);margin:14px 0 4px}
+.crumb a{text-decoration:none}
+.hero{padding:34px 0 10px;text-align:center}
+.eyebrow{letter-spacing:.34em;text-transform:uppercase;font-size:.72rem;color:var(--gold);margin-bottom:12px}
+.hero h1{font-size:clamp(2.4rem,6vw,3.9rem);font-weight:600;line-height:1.08}
+.hero h1 em{font-style:italic;color:var(--gold-soft)}
+.hero p.lede{max-width:660px;margin:16px auto 0;color:var(--muted);font-size:1.05rem}
+section{padding:30px 0 4px}
+h2{font-size:1.9rem;font-weight:600;margin-bottom:10px}
+h2 em{font-style:italic;color:var(--gold-soft)}
+h3{font-size:1.35rem;color:var(--gold-soft);margin:18px 0 6px}
+p.body{color:var(--muted);margin-bottom:12px;font-size:1.02rem}
+.rule{width:74px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto 0;position:relative}
+.rule::after{content:"\263E";position:absolute;left:50%;top:-11px;transform:translateX(-50%);color:var(--gold);background:var(--bg);padding:0 8px;font-size:.85rem}
+.panel{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:14px;padding:24px}
+.toolbox{max-width:760px;margin:0 auto;background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:14px;padding:28px;text-align:center}
+.btn{display:inline-block;padding:12px 26px;border-radius:999px;border:1px solid var(--gold);color:#17102a;background:linear-gradient(180deg,var(--gold-soft),var(--gold));font-family:var(--sans);font-weight:500;letter-spacing:.06em;text-decoration:none;cursor:pointer;font-size:.95rem}
+.btn.ghost{background:transparent;color:var(--gold-soft)}
+.fld label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px}
+.fld input{width:100%;background:#0f0b22;border:1px solid var(--line-soft);border-radius:9px;color:var(--ink);padding:11px 12px;font-family:var(--sans);font-size:.97rem}
+.fld input:focus{outline:none;border-color:var(--gold)}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.95rem}
+th{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}
+td{padding:10px 8px;border-bottom:1px solid var(--line-soft);color:var(--muted)}
+td b{color:var(--ink);font-weight:500}
+td a{white-space:nowrap}
+.month{border-top:1px solid var(--line-soft);padding-top:8px}
+.faq{margin-bottom:16px}
+.faq h3{color:var(--ink)}
+.faq p{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}table{font-size:.85rem}}
+.cell{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line-soft);border-radius:12px;padding:18px}
+.cell .k{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
+.cell p{color:var(--muted);font-size:.94rem}
+.cell ul{list-style:none}
+.cell li{color:var(--muted);font-size:.94rem;margin-bottom:8px;padding-left:16px;position:relative}
+.cell li::before{content:"\2726";position:absolute;left:0;color:var(--gold);font-size:.7rem;top:3px}
+.verdict{font-family:var(--serif);font-size:clamp(2.6rem,8vw,4.2rem);font-weight:700;color:var(--gold-soft);line-height:1}
+.cardimg{width:100%;max-width:260px;height:400px;object-fit:cover;border-radius:12px;border:1px solid var(--gold-dim);display:block;margin:0 auto}
+.cardimg.rev{transform:rotate(180deg)}
+.result{display:none;margin-top:20px;border-top:1px solid var(--line-soft);padding-top:20px}
+.result.show{display:block}
+footer{border-top:1px solid var(--line-soft);margin-top:40px;padding:22px 0 40px;color:var(--faint);font-size:.82rem}
+footer .cols{display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--gold-soft)}
+.disc{margin-top:16px;max-width:760px;line-height:1.55}
+.tag{display:inline-block;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:99px;padding:3px 10px;margin-bottom:10px}
+.count{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);color:var(--gold-soft)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Three-Card Tarot Spread", "url": "https://oddjack0.github.io/moonphase-tarot/tarot/three-card-spread/", "applicationCategory": "EntertainmentApplication", "operatingSystem": "Web", "offers": {"@type": "Offer", "price": 0, "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://oddjack0.github.io/moonphase-tarot/"}, {"@type": "ListItem", "position": 2, "name": "Tarot Spreads", "item": "https://oddjack0.github.io/moonphase-tarot/tarot-spreads/"}, {"@type": "ListItem", "position": 3, "name": "Three-Card Spread", "item": "https://oddjack0.github.io/moonphase-tarot/tarot/three-card-spread/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What do the past, present and future positions mean?", "acceptedAnswer": {"@type": "Answer", "text": "Past is what shaped the situation, including influences you may still be carrying. Present is where the situation stands right now and what is most alive in it. Future is where the current path is heading, not a fixed fate \u2014 change the present and the future changes with it."}}, {"@type": "Question", "name": "Can I use the three-card spread for any question?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, it is the most versatile spread in tarot. It works for decisions, relationships, work, and general check-ins, because almost every situation has a backstory, a current state and a direction of travel."}}, {"@type": "Question", "name": "What if I draw three difficult cards?", "acceptedAnswer": {"@type": "Answer", "text": "Difficult cards are information, not doom. A spread full of challenging cards usually points to one honest theme running through past, present and future \u2014 and naming that theme is often the first step to changing it."}}, {"@type": "Question", "name": "Do reversed cards matter in this spread?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Reversed cards appear in about a third of draws here, and they show the card's energy blocked, delayed or turned inward. Read the reversed meaning for that position, and notice whether the blockage sits in the past, the present, or the future."}}]}</script>
+
+</head>
+<body>
+<div class="wrap">
+<div class="topbar"><a href="../../index.html">&#8592; Home</a><a class="brand" href="../../index.html">&#9789; MoonPhase Tarot</a><a href="../../index.html#daily">Today&rsquo;s Reading</a></div>
+<p class="crumb"><a href="../../index.html">Home</a> &rsaquo; <a href="../../index.html#draw">Tarot</a> &rsaquo; <a href="../../tarot-spreads/">Spreads</a> &rsaquo; Three-Card Spread</p>
+<div class="hero"><div class="eyebrow">Free three-card reading &middot; no signup</div>
+<h1>Three-Card Tarot Spread</h1>
+<p class="lede">Past, present and future in three cards: what shaped your situation, where it stands now, and where it is heading &mdash; with a summary that ties all three together.</p><div class="rule"></div></div>
+<section><div class="toolbox" style="max-width:860px">
+<span class="tag">Free Past &middot; Present &middot; Future Reading</span>
+<p class="body">Focus on a question or situation, then draw. Three distinct cards, no repeats.</p>
+<p><button class="btn" id="draw3Btn">Draw 3 Cards</button></p>
+<div class="result" id="threeResult"></div></div></section>
+<section><h2>The Three <em>Positions</em></h2>
+<div style="overflow-x:auto"><table><thead><tr><th>Position</th><th>Card</th><th>What It Shows</th></tr></thead><tbody>
+<tr><td><b>1 &mdash; Past</b></td><td>The roots</td><td>What shaped the situation: the event, decision or pattern that set things in motion, and what you may still be carrying from it.</td></tr>
+<tr><td><b>2 &mdash; Present</b></td><td>The crossroads</td><td>Where things stand right now: the live energy, the choice in front of you, and what most needs your attention today.</td></tr>
+<tr><td><b>3 &mdash; Future</b></td><td>The direction</td><td>Where the current path is heading if nothing changes &mdash; a direction to work with or to change, never a fixed fate.</td></tr>
+</tbody></table></div></section>
+<section><div class="panel"><span class="tag">Example Reading</span>
+<h2>A Reading, <em>Worked Through</em></h2>
+<div class="grid3">
+<div class="cell"><div class="k">1 &mdash; Past</div><h3>The Fool, upright</h3><p><img class="cardimg" style="height:240px" src="../../assets/cards/00-fool.jpg" alt="The Fool tarot card"></p><p>A new chapter opened and the universe quietly cheered: a leap taken in innocence and curiosity set this whole story in motion.</p></div>
+<div class="cell"><div class="k">2 &mdash; Present</div><h3>The Magician, upright</h3><p><img class="cardimg" style="height:240px" src="../../assets/cards/01-magician.jpg" alt="The Magician tarot card"></p><p>Everything needed is already on the table. This is a moment for focused action, not waiting &mdash; skill, willpower and clear words are all available right now.</p></div>
+<div class="cell"><div class="k">3 &mdash; Future</div><h3>The Star, upright</h3><p><img class="cardimg" style="height:240px" src="../../assets/cards/17-star.jpg" alt="The Star tarot card"></p><p>Quiet hope and genuine renewal lie ahead. After the effort of the present, the path opens into something calmer and more hopeful than expected.</p></div>
+</div>
+<h3>Overall Summary</h3>
+<p class="body">Read together, the three cards tell one story: a brave beginning (the Fool) has led to a moment where you finally hold all the tools (the Magician), and if you use them, the outcome is renewal rather than struggle (the Star). The thread is trust &mdash; trust that carried you into the leap, trust in your own ability now, and trust that the future rewards both. The practical takeaway is simple: act with the Magician's focus this week, and let the Star's hope set the horizon.</p></div></section>
+<section><h2>When to Use This <em>Spread</em></h2>
+<p class="body">The three-card spread is the right tool whenever a situation has a story: a decision with a backstory, a relationship at a turning point, a project that has stalled, or a general &ldquo;where am I headed?&rdquo; check-in. If your question is a simple yes or no, use the <a href="../../yes-no-tarot/">yes/no reading</a> instead; if it needs ten cards and a deep dive, you are looking at a Celtic Cross, which is coming soon to the <a href="../../tarot-spreads/">spreads hub</a>.</p>
+<p class="body">It also works beautifully as a regular practice. A weekly three-card draw &mdash; same day, same question of &ldquo;what does this week hold?&rdquo; &mdash; builds a habit of reflection without the overwhelm of a large spread, and over time the pattern of your own draws becomes a journal of your year.</p></section>
+<section><h2>How to Ask a <em>Good Question</em></h2>
+<p class="body">A good three-card question is open, specific and yours to act on. &ldquo;What should I understand about my new role?&rdquo; will give you a richer spread than &ldquo;will work be fine?&rdquo;, because it invites the cards to show roots, reality and direction instead of a thumbs-up. Name the situation in one sentence before you draw, and keep the question about your own path rather than someone else's private thoughts.</p>
+<p class="body">Avoid questions that ask for dates, guarantees or a single yes/no verdict &mdash; those flatten a three-card story into one word. And if the future card unsettles you, remember its job: it shows where the current path leads, which is exactly the information you need to change course if you want to.</p></section>
+<section><h2>Three-Card <em>Questions</em></h2><div class="faq"><h3>What do the past, present and future positions mean?</h3><p>Past is what shaped the situation, including influences you may still be carrying. Present is where the situation stands right now and what is most alive in it. Future is where the current path is heading, not a fixed fate &mdash; change the present and the future changes with it.</p></div><div class="faq"><h3>Can I use the three-card spread for any question?</h3><p>Yes, it is the most versatile spread in tarot. It works for decisions, relationships, work, and general check-ins, because almost every situation has a backstory, a current state and a direction of travel.</p></div><div class="faq"><h3>What if I draw three difficult cards?</h3><p>Difficult cards are information, not doom. A spread full of challenging cards usually points to one honest theme running through past, present and future &mdash; and naming that theme is often the first step to changing it.</p></div><div class="faq"><h3>Do reversed cards matter in this spread?</h3><p>Yes. Reversed cards appear in about a third of draws here, and they show the card's energy blocked, delayed or turned inward. Read the reversed meaning for that position, and notice whether the blockage sits in the past, the present, or the future.</p></div></section>
+<section><div class="panel"><h2>Go Deeper</h2>
+<p><a href="../../tarot-spreads/">Tarot Spreads &mdash; browse every spread</a></p>
+<p><a href="../../yes-no-tarot/">Yes or No Tarot &mdash; free one-card yes/no reading</a></p>
+<p><a href="../../index.html">MoonPhase Tarot homepage &mdash; card of the day</a></p></div></section>
+<footer><div class="cols"><div><div style="font-family:var(--serif);font-size:1.25rem"><span style="color:var(--gold)">&#9789;</span> Moon<em style="color:var(--gold-soft)">Phase</em> Tarot</div>
+<p style="margin-top:8px;max-width:300px">Free daily tarot, horoscopes, moon phases and birth charts &mdash; made with care, updated by the moon.</p></div>
+<div><p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Explore</p>
+<p><a href="../../index.html">Home</a></p><p><a href="../../tarot-spreads/">Tarot Spreads</a></p><p><a href="../../yes-no-tarot/">Yes or No Tarot</a></p><p><a href="../../full-moon-calendar-2026/">Full Moon Calendar 2026</a></p></div>
+<div><p style="letter-spacing:.2em;text-transform:uppercase;font-size:.68rem;margin-bottom:10px">Our Shops</p>
+<p><a href="https://ko-fi.com/oddjack/shop" target="_blank" rel="noopener">Ko-fi &mdash; digital downloads</a></p>
+<p><a href="https://www.redbubble.com/people/Odd-jack/shop" target="_blank" rel="noopener">Redbubble &mdash; printed goods</a></p></div></div>
+<p class="disc">For entertainment and self-reflection purposes only. Astrology and tarot readings are not a substitute for professional advice on medical, legal, financial or mental-health matters.</p><p style="margin-top:14px">&copy; 2026 MoonPhase Tarot &middot; Part of the Odd-jack studio family</p></footer>
+<script>
+const MAJORS=[
+ ["The Fool","0","✧","beginnings, innocence, leap of faith","A new chapter opens and the universe is quietly cheering. Trust the pull toward the unknown — pack light, stay curious, and let spontaneity lead.","Hesitation, recklessness or a leap taken without looking. Slow down: the cliff edge is real, even if the view is beautiful.","Love arrives as adventure — a connection that feels like fresh air. Let it be playful before it gets serious.","A risk at work pays off if it's calculated. Pitch the wild idea; just check the numbers first."],
+ ["The Magician","I","☿","willpower, skill, creation","Everything you need is already on the table. Focus your talent, say it plainly, and act — this is a day to make things happen, not wait for them.","Scattered energy or a smooth talker nearby. Someone's magic is smoke and mirrors; check the facts before you commit.","Charm is high and intentions matter. Be direct about what you want — mixed signals waste your power.","Your skills are the strategy. A presentation, negotiation or launch goes your way if you prepare like you mean it."],
+ ["The High Priestess","II","☾","intuition, mystery, inner knowing","The answer isn't in the noise — it's in the quiet underneath. Your intuition is unusually accurate now. Listen first, speak later.","You're ignoring a gut feeling, or a secret is distorting the picture. What isn't being said matters most.","A deep, soulful connection is forming — possibly unspoken. Trust what's felt over what's promised.","Not everything at work is on the record. Read between the lines and keep your counsel until the picture clears."],
+ ["The Empress","III","♀","abundance, nurture, creativity","Growth, comfort and creative fertility surround you. Tend what you love — a project, a person, yourself — and it will flourish.","Neglecting your own needs or a creative block. Abundance returns when you refill your own cup first.","Warm, sensual and generous energy. Love grows through care and touch — let yourself receive as much as you give.","A creative project or collaboration bears fruit. Beauty and comfort are worth investing in right now."],
+ ["The Emperor","IV","♜","structure, authority, stability","Order brings freedom today. Set the boundary, make the plan, keep the standard — your steadiness steadies everyone.","Rigid control or a clash with authority. Rules matter, but so does knowing which ones were made to be bent.","Stability is sexy now. A dependable partner — or being one — builds something that lasts.","Structure wins: budgets, systems, deadlines. Leadership is noticed; step into it cleanly."],
+ ["The Hierophant","V","♝","tradition, guidance, shared values","Conventional wisdom earns its name today. A mentor, ritual or time-tested path offers exactly the grounding you need.","Question the rulebook. Tradition that no longer serves you is just a habit wearing a crown.","Shared values make or break this bond. A relationship may deepen toward real commitment.","The established route works — certification, procedure, the mentor's advice. Don't reinvent what already runs."],
+ ["The Lovers","VI","♡","union, choice, alignment","A meaningful choice of the heart is before you. When your values and your desires agree, the decision makes itself.","Misalignment — wanting one thing, choosing another. A relationship or decision needs an honest conversation.","A significant connection, possibly a soulmate-grade one. Chemistry plus shared values: the real thing has both.","A partnership or contract decision. Choose the option you'd still respect in five years."],
+ ["The Chariot","VII","♞","momentum, victory, direction","Grab the reins. Opposing forces pull at you, but focused will turns them into horsepower. Movement beats perfection today.","Loss of direction or a win-at-all-costs urge. If everything is a battle, you've lost the map — regroup before charging.","Passion with direction. Someone is pursuing — or being pursued — with real intent. Make sure the destination is shared.","Momentum is yours. A project, trip or application pushes through if you keep both hands on the wheel."],
+ ["Strength","VIII","♌","courage, patience, gentle power","Your power today is the quiet kind: patience, warmth and self-control. You don't need to roar — you need to stay.","Self-doubt or a temper flare. The beast isn't the problem; how tightly you're gripping is.","Tenderness tames what force cannot. A vulnerable conversation deepens trust more than grand gestures.","Diplomacy outperforms dominance. Handle the difficult person — or deadline — with calm persistence."],
+ ["The Hermit","IX","✦","solitude, wisdom, searching","Withdraw to recharge and reflect. The guidance you need is internal, and it speaks softly — give it silence to work in.","Isolation has tipped into loneliness, or advice is being refused out of pride. Come back down the mountain soon.","A pause for self-knowledge improves love. If single, you're clarifying what you actually want — that's progress.","Work alone on the deep problem. Mentorship — giving or receiving it — features strongly."],
+ ["Wheel of Fortune","X","☸","cycles, luck, turning point","The wheel turns in your favor. A shift of fortune, timing or circumstance is underway — stay loose and ready to move.","A run of friction or a cycle repeating. Bad timing isn't bad character; ride it out and learn the pattern.","Fate has a hand in this meeting. Connections made now tend to matter more than they first appear.","Timing is everything this week. A delayed project suddenly unsticks — be ready to say yes quickly."],
+ ["Justice","XI","⚖","truth, fairness, accountability","Truth and consequences are linked today. Decide fairly, sign carefully, and let the facts — not feelings — cast the deciding vote.","An unfair situation or a truth being avoided. Imbalance corrects itself eventually; better to correct it yourself.","Honesty is the foundation here. A relationship thrives when both sides keep the ledger — and the promises — clean.","Contracts, reviews and legal matters favor the prepared and the truthful. Document everything."],
+ ["The Hanged Man","XII","♆","surrender, new perspective, pause","Voluntary pause. What looks like a standstill is a viewpoint shift — hang loose and let the new angle reveal itself.","Stalling without purpose, or a sacrifice nobody asked for. If the pause teaches nothing, it's just a delay.","Love needs patience, not pressure. Seeing a partner's side — truly — changes the whole story.","A project benefits from suspension, not force. Use the wait to rethink the approach."],
+ ["Death","XIII","♇","endings, release, rebirth","Something is complete, and clearing it makes room for the truer thing. This card is rarely literal — it's a door closing so a better one opens.","Clinging to what's already over. The resistance hurts more than the ending would.","A relationship chapter ends or transforms completely. Release makes space for honesty — or for someone new.","A role, project or method has run its course. End it cleanly and reinvest the energy."],
+ ["Temperance","XIV","🕊","balance, moderation, alchemy","Blend, don't binge. The middle path isn't boring today — it's alchemy. Small, steady adjustments create something greater than the parts.","Excess or imbalance in one corner of life is draining the rest. Recalibrate gently rather than swinging to the other extreme.","A harmonious, healing connection. Differences blend instead of clashing — this one restores your faith.","Collaboration across different styles works beautifully. Pace yourself; sustainable beats heroic."],
+ ["The Devil","XV","⛓","attachment, temptation, shadow","Name the chain. A habit, craving or dynamic has more power than it should — and it keeps that power by staying unexamined.","Breaking free is underway. An unhealthy attachment loosens its grip; keep walking toward the light.","Intense chemistry with a warning label. Enjoy desire honestly, but notice where attraction turns into control.","A golden cage: money or comfort keeping you somewhere your soul has left. Count the real cost."],
+ ["The Tower","XVI","ϟ","upheaval, revelation, breakthrough","A truth arrives like lightning — sudden, clarifying, impossible to unsee. What falls was built on shaky ground; what remains is real.","A change is being resisted or delayed, prolonging the wobble. Better a planned demolition than a collapse.","A revelation shakes a relationship's foundations. Painful now, but honesty is the only ground worth rebuilding on.","Expect the unexpected at work. Have a plan B — and know that the shake-up exposes what was already broken."],
+ ["The Star","XVII","☆","hope, healing, renewal","After the storm, this: quiet hope and genuine renewal. You're more on-path than you think. Wish boldly and work gently.","Dimmed faith or healing done halfway. Your optimism isn't naive — it's a resource. Protect it.","A healing, hopeful connection — someone who sees your light clearly. Old wounds lose their charge.","Recognition and inspiration flow. Creative and public-facing work especially shines now."],
+ ["The Moon","XVIII","☽","dreams, illusion, the subconscious","Things are not entirely what they seem — and that's not a threat, it's an invitation. Dreams, art and intuition carry the real information now.","Confusion lifts soon. Anxiety has been exaggerating the shadows; wait for daylight before deciding.","Romantic fog: projections and mixed signals. Ask directly rather than decoding hints at 2 a.m.","Uncertainty at work is temporary. Don't sign in the fog — clarify timelines and expectations first."],
+ ["The Sun","XIX","☀","joy, vitality, success","Yes. Pure and simple — warmth, clarity and success light up the day. Say yes to the invitation, the plan, the spotlight.","Happiness delayed, not denied. A small cloud — burnout or doubt — is passing; don't mistake it for the climate.","Joyful, honest love. Play together. If it feels easy and bright, believe it.","Visibility and success. Launch, present, celebrate — your work deserves an audience right now."],
+ ["Judgement","XX","♆","awakening, calling, forgiveness","A calling — inner or outer — asks for an answer. Forgive the past its weight, assess honestly, and rise to the next level of your life.","Self-judgment turned harsh, or a needed wake-up call being snoozed. The review is kinder than you fear.","A relationship gets a second chance — if both people have genuinely changed. Forgiveness is the theme.","A review, evaluation or big decision goes well for the honest. It's time to step up, not back."],
+ ["The World","XXI","♁","completion, wholeness, arrival","A cycle completes beautifully. You've integrated the lesson and earned the arrival — celebrate, then let the next journey call.","Almost there: one loose end delays the celebration. Finish the final detail rather than starting something new.","A complete, balanced love — or meeting someone far from home. Wholeness attracts wholeness.","A major milestone lands: completion, promotion, launch. Your work may reach further than expected — possibly international."]
+];
+const SUITS={
+ Wands:{el:"Fire",dom:"passion, ambition and creative drive",glyph:"✷",love:"Sparks, adventure and desire run this story — the flame is real, feed it with honesty.",career:"Entrepreneurial energy: pitch, launch, lead. Momentum rewards the bold."},
+ Cups:{el:"Water",dom:"love, emotion and intuition",glyph:"♥",love:"Feelings deepen and soften. Vulnerability offered now will be met with care.",career:"Trust your read of people. Collaborative, creative and care-centered work flows."},
+ Swords:{el:"Air",dom:"thought, truth and clear communication",glyph:"✕",love:"Words matter most now — a clear, kind conversation clears the air.",career:"Strategy, analysis and honest feedback win. Decide with the head, verify with facts."},
+ Pentacles:{el:"Earth",dom:"money, work and the tangible world",glyph:"❖",love:"Love shows up practically — reliability, presence, building something real together.",career:"Steady effort compounds. Budgets, skills and long-term plans are favored."}
+};
+const RANKS=[
+ ["Ace","A","a powerful new beginning","seeds a breakthrough","a false start or blocked spark — the potential is there, the timing isn't"],
+ ["Two","2","a choice or partnership forms","brings balance and a key decision","indecision or a partnership out of sync — pause and re-weigh"],
+ ["Three","3","early growth and collaboration","shows first real results","delays or friction in the group — roles need clarifying"],
+ ["Four","4","stability and a foundation","consolidates what you've built","stagnation — the foundation holds, but nothing grows on it"],
+ ["Five","5","conflict or challenge","tests your commitment","the tension eases — lessons from the friction are ready to use"],
+ ["Six","6","harmony and recognition","restores balance and goodwill","an imbalance lingers — generosity or apology is owed somewhere"],
+ ["Seven","7","assessment and strategy","asks you to defend your position wisely","scattered focus — too many fronts, not enough strategy"],
+ ["Eight","8","swift movement and momentum","accelerates progress noticeably","delays and mixed messages — momentum stalls until one thing is clarified"],
+ ["Nine","9","near-completion and resilience","rewards persistence","weariness — you're close, but running on empty; rest is productive"],
+ ["Ten","10","completion and culmination","brings a cycle to its full result","an ending drags or a burden feels heavier than it should"],
+ ["Page","Pg","a curious messenger energy","brings news and a learning opportunity","gossip, delays or a message misunderstood — double-check before reacting"],
+ ["Knight","Kn","bold, questing action","charges toward the goal","haste or restlessness — speed without direction scatters the quest"],
+ ["Queen","Q","mature, magnetic mastery","embodies the suit at its wisest","insecurity or over-giving — mastery includes boundaries"],
+ ["King","K","commanding, seasoned authority","leads with experience and control","rigidity or misuse of influence — authority works best with warmth"]
+];
+function buildDeck(){
+ const deck=[];
+ MAJORS.forEach((m,i)=>deck.push({name:m[0],img:String(i).padStart(2,"0")+"-"+m[0].toLowerCase().replace(/^the /,"").replace(/\s+/g,"-"),kw:m[3],up:m[4],rev:m[5],arcana:"Major Arcana"}));
+ Object.keys(SUITS).forEach(suit=>{const S=SUITS[suit];
+  RANKS.forEach(r=>{deck.push({name:r[0]+" of "+suit,img:(r[0]+" of "+suit).toLowerCase().replace(/\s+/g,"-"),kw:r[2]+" \u00b7 "+S.dom,
+   up:"The "+r[0]+" of "+suit+" "+r[3]+" in the realm of "+S.dom+".",rev:"Reversed, this card signals "+r[4]+", within "+S.dom+".",arcana:"Suit of "+suit});});});
+ return deck;
+}
+const DECK=buildDeck();
+const MAYBE_CARDS=["The Hanged Man","Wheel of Fortune","Temperance","Two of Swords","Four of Swords"];
+function drawCards(n){const d=[...DECK];const out=[];for(let i=0;i<n;i++){const j=Math.floor(Math.random()*d.length);const c=d.splice(j,1)[0];out.push({card:c,reversed:Math.random()<0.33});}return out;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+const POS=[{t:"Past",s:"The roots — what shaped the situation"},{t:"Present",s:"The crossroads — where things stand now"},{t:"Future",s:"The direction — where the current path leads"}];
+document.getElementById("draw3Btn").addEventListener("click",function(){
+ const ds=drawCards(3);let html="<div class='grid3'>";
+ ds.forEach((d,i)=>{const c=d.card;const rev=d.reversed;const mean=rev?c.rev:c.up;
+  html+="<div class='cell'><div class='k'>"+(i+1)+" — "+POS[i].t+"</div><h3>"+esc(c.name)+(rev?", reversed":"")+"</h3><img class='cardimg"+(rev?" rev":"")+"' style='height:240px' src='../../assets/cards/"+c.img+".jpg' alt='"+esc(c.name)+" tarot card'><p style='margin-top:10px'>"+esc(POS[i].s)+".</p><p>"+esc(mean)+"</p></div>";});
+ html+="</div><h3>Overall Summary</h3><p class='body' style='text-align:left'>Read together, your cards trace one arc: "+esc(ds[0].card.name)+" in the past shows where this began, "+esc(ds[1].card.name)+" in the present shows what is live right now, and "+esc(ds[2].card.name)+" in the future shows where that path is heading. The thread between them is yours to name — ask what the past card taught, what the present card asks you to do, and whether the future card is a destination you want or a direction you would rather change. That question, held honestly, is the real reading.</p>";
+ document.getElementById("threeResult").innerHTML=html;
+ document.getElementById("threeResult").classList.add("show");
+});
+</script>
+</div>
+</body>
+</html>
